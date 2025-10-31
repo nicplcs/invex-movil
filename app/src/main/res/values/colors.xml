@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Colores base -->
+	<color name="black">#000000</color>
+	<color name="white">#FFFFFFFF</color>
+
+	<!-- Fondos -->
+	<color name="dark_background">#1A1A1A</color>
+	<color name="card_background">#1E1E1E</color> <!-- gris oscuro / casi negro -->
+
+	<!-- Acentos -->
+	<color name="gold_accent">#D4AF37</color>     <!-- dorado para íconos -->
+	<color name="gold_border">#FFD700</color>     <!-- dorado brillante -->
+
+	<!-- Texto -->
+	<color name="text_primary">#FFFFFF</color>
+	<color name="text_secondary">#BDBDBD</color>  <!-- gris claro -->
+
+	<!-- Botones -->
+	<color name="purple_button">#6B5B95</color>
+	<color name="purple_dark">#4A4063</color>
+
+</resources>
