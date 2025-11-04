@@ -11,4 +11,13 @@ interface ApiServicesKotlin {
 
     @POST("/usuarios")
     fun crearUsuario(@Body usuario: Usuario): Call<String>
+
+
+    @GET("/productos")
+    fun getProductos(): Call<List<Producto>>
+
+
+    @POST("/productos")
+    fun crearProducto(@Body producto: Producto): Call<Void>
+
 }
