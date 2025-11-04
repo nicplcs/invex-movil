@@ -11,4 +11,7 @@ interface ApiServicesKotlin {
 
     @POST("/usuarios")
     fun crearUsuario(@Body usuario: Usuario): Call<String>
+
+    @GET("movimientos")
+    fun getMovimientos(): Call<List<Movimiento>>
 }
