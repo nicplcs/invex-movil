@@ -18,4 +18,11 @@ interface ApiServicesKotlin {
 
     @DELETE("eliminarMovimiento")
     fun deleteMovimiento(@Body movimiento: Movimiento): Call<Void>
+
+    @GET("/productos")
+    fun getProductos(): Call<List<Producto>>
+
+
+    @POST("/productos")
+    fun crearProducto(@Body producto: Producto): Call<Void>
 }
