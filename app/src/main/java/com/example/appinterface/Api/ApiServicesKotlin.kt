@@ -4,6 +4,8 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HEAD
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 
 interface ApiServicesKotlin {
@@ -16,6 +18,6 @@ interface ApiServicesKotlin {
     @GET("/movimientos")
     fun getMovimientos(): Call<List<Movimiento>>
 
-    @DELETE("eliminarMovimiento")
+    @HTTP(method = "DELETE", path = "eliminarMovimiento", hasBody = true)
     fun deleteMovimiento(@Body movimiento: Movimiento): Call<Void>
 }
