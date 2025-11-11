@@ -15,23 +15,36 @@
             android:orientation="vertical"
             android:padding="12dp">
 
+
         <TextView
-                android:id="@+id/tvNombre"
+                android:id="@+id/tvId_movimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Responsable"
+                android:text="Id del movimiento"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+
+        <TextView
+                android:id="@+id/tvResponsable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Responsable del movimiento"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"/>
+
 
         <TextView
                 android:id="@+id/tvTipoMovimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tipo de movimiento"
-                android:textColor="#FFD700"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
 
         <TextView
                 android:id="@+id/tvDescripcionMovimiento"
@@ -40,16 +53,41 @@
                 android:text="Descripción del movimiento"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"/>
 
         <TextView
                 android:id="@+id/tvFechaMovimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fecha: 2025-10-31"
-                android:textColor="#B0B0B0"
-                android:textSize="12sp"
-                android:layout_marginTop="6dp" />
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+
+        <TextView
+                android:id="@+id/tvId_producto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID del producto"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_margin="4dp"/>
+        <TextView
+                android:id="@+id/tvCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad del movimiento"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_margin="4dp"/>
+        <TextView
+                android:id="@+id/tvAccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accion del movimiento"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:layout_margin="4dp"/>
 
         <Button
                 android:id="@+id/btnEliminar"
@@ -59,7 +97,7 @@
                 android:backgroundTint="#D32F2F"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="8dp"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"/>
 
     </LinearLayout>
 

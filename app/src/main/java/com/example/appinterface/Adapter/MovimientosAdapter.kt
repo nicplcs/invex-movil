@@ -34,18 +34,26 @@ class MovimientosAdapter(
     }
 
     class MovimientoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvId_movimiento: TextView = itemView.findViewById(R.id.tvId_movimiento)
         private val tvTipo: TextView = itemView.findViewById(R.id.tvTipoMovimiento)
         private val tvDescripcion: TextView = itemView.findViewById(R.id.tvDescripcionMovimiento)
-        private val tvUsuario: TextView = itemView.findViewById(R.id.tvNombre)
+        private val tvResponsable: TextView = itemView.findViewById(R.id.tvResponsable)
         private val tvFecha: TextView = itemView.findViewById(R.id.tvFechaMovimiento)
+        private val tvCantidad: TextView = itemView.findViewById(R.id.tvCantidad)
+        private val tvId_producto: TextView = itemView.findViewById(R.id.tvId_producto)
+        private val tvAccion: TextView = itemView.findViewById(R.id.tvAccion)
         private val card: CardView = itemView.findViewById(R.id.cardView)
         private val btnEliminar: Button = itemView.findViewById(R.id.btnEliminar)
 
         fun bind(movimiento: Movimiento, position: Int, onDeleteClick: (Movimiento, Int) -> Unit) {
-            tvTipo.text = movimiento.tipo
-            tvDescripcion.text = movimiento.descripcion
-            tvUsuario.text = "Responsable: ${movimiento.usuario_responsable}"
+            tvId_movimiento.text = "Id movimiento: ${movimiento.id_movimiento}"
+            tvTipo.text = "Tipo: ${movimiento.tipo}"
+            tvDescripcion.text = "Descripcion: ${ movimiento.descripcion}"
+            tvResponsable.text = "Responsable: ${movimiento.usuario_responsable}"
             tvFecha.text = "Fecha: ${movimiento.fecha}"
+            tvCantidad.text = "Cantidad: ${movimiento.cantidad}"
+            tvId_producto.text = "Id Producto: ${movimiento.id_producto}"
+            tvAccion.text = "Accion: ${movimiento.accion}"
 
             val context = itemView.context
             val colorRegistro = context.getColor(R.color.purple_button)
@@ -54,10 +62,15 @@ class MovimientosAdapter(
 
             if (movimiento.tipo.lowercase() == "registro") {
                 card.setCardBackgroundColor(colorRegistro)
+                tvId_movimiento.setTextColor(textColor)
                 tvTipo.setTextColor(textColor)
                 tvDescripcion.setTextColor(textColor)
-                tvUsuario.setTextColor(textColor)
+                tvResponsable.setTextColor(textColor)
                 tvFecha.setTextColor(textColor)
+                tvCantidad.setTextColor(textColor)
+                tvId_producto.setTextColor(textColor)
+                tvAccion.setTextColor(textColor)
+
             } else {
                 card.setCardBackgroundColor(colorOtro)
             }
