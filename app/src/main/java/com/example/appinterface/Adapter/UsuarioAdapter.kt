@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.Api.Usuario
 import com.example.appinterface.R
 
-class PersonaAdapter(private val usuarios: List<Usuario>) :
-    RecyclerView.Adapter<PersonaAdapter.PersonaViewHolder>() {
+class UsuarioAdapter(private val usuarios: MutableList<Usuario>) :
+    RecyclerView.Adapter<UsuarioAdapter.PersonaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonaViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -22,6 +22,19 @@ class PersonaAdapter(private val usuarios: List<Usuario>) :
     }
 
     override fun getItemCount(): Int = usuarios.size
+
+    fun getUsuario(position: Int): Usuario = usuarios[position]
+
+    fun updateList(nuevaLista: List<Usuario>) {
+        usuarios.clear()
+        usuarios.addAll(nuevaLista)
+        notifyDataSetChanged()
+    }
+
+    fun addUsuario(usuario: Usuario) {
+        usuarios.add(usuario)
+        notifyItemInserted(usuarios.size - 1)
+    }
 
     class PersonaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvNombre: TextView = itemView.findViewById(R.id.tvNombre)
