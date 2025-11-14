@@ -53,7 +53,7 @@ class MovimientosActivity : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_usuarios -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, usuariosActivity::class.java))
                     true
                 }
                 R.id.navigation_productos -> {
