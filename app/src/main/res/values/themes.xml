@@ -6,4 +6,21 @@
 	</style>
 
 	<style name="Theme.AppInterface" parent="Base.Theme.AppInterface"/>
+
+	<!-- Tema base de la aplicación -->
+	<style name="Theme.PuntoExito" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+		<!-- Colores primarios -->
+		<item name="colorPrimary">@color/black</item>
+		<item name="colorPrimaryVariant">@color/white</item>
+		<item name="colorOnPrimary">@color/white</item>
+
+		<!-- Colores secundarios -->
+		<item name="colorSecondary">@color/black</item>
+		<item name="colorSecondaryVariant">@color/white</item>
+		<item name="colorOnSecondary">@color/black</item>
+
+		<!-- Fondo de la ventana -->
+		<item name="android:windowBackground">@color/black</item>
+
+	</style>
 </resources>

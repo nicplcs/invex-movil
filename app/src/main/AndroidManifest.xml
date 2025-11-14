@@ -11,6 +11,15 @@
 			android:theme="@style/Theme.AppInterface"
 			android:usesCleartextTraffic="true"
 			tools:targetApi="31">
+
+		<activity
+				android:name=".MainActivityy"
+				android:exported="true">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
 		<!-- USUARIOSSS -->
 		<activity
 				android:name=".usuariosActivity"
