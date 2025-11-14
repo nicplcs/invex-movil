@@ -47,7 +47,7 @@ class MovimientosActivity : AppCompatActivity() {
             mostrarmovimientos(view)
         }
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        /*val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.selectedItemId = R.id.navigation_movimientos
 
         bottomNav.setOnItemSelectedListener { item ->
@@ -63,7 +63,9 @@ class MovimientosActivity : AppCompatActivity() {
                 R.id.navigation_movimientos -> true
                 else -> false
             }
-        }
+        }*/
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Gestión de Movimientos"
     }
 
     fun mostrarmovimientos(v: View) {
@@ -137,5 +139,9 @@ class MovimientosActivity : AppCompatActivity() {
                 Toast.makeText(this@MovimientosActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
