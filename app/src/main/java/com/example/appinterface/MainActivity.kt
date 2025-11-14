@@ -1,4 +1,4 @@
-package com.example.appinterface
+/*package com.example.appinterface
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -133,3 +133,4 @@ class MainActivity : AppCompatActivity() {
         })
     }
 }
+*/
