@@ -41,4 +41,9 @@ interface ApiServicesKotlin {
 
     @POST("/productos")
     fun crearProducto(@Body producto: Producto): Call<Void>
+
+    //DEVOLUCIONES
+
+    @GET("/devoluciones")
+    fun getDevoluciones(): Call<List<Devolucion>>
 }

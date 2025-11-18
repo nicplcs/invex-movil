@@ -47,23 +47,6 @@ class MovimientosActivity : AppCompatActivity() {
             mostrarmovimientos(view)
         }
 
-        /*val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNav.selectedItemId = R.id.navigation_movimientos
-
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_usuarios -> {
-                    startActivity(Intent(this, usuariosActivity::class.java))
-                    true
-                }
-                R.id.navigation_productos -> {
-                    startActivity(Intent(this, ProductosActivity::class.java))
-                    true
-                }
-                R.id.navigation_movimientos -> true
-                else -> false
-            }
-        }*/
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Gestión de Movimientos"
     }
