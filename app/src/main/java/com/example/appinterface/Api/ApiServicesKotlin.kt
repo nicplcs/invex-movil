@@ -53,4 +53,10 @@ interface ApiServicesKotlin {
     fun eliminarProducto(
         @Path("id") id: Int
     ): Call<Void>
+  
+      //DEVOLUCIONES
+
+    @GET("/devoluciones")
+    fun getDevoluciones(): Call<List<Devolucion>>
+
 }

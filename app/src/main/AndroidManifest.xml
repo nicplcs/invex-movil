@@ -39,6 +39,12 @@
 		<activity
 				android:name=".MovimientosActivity"
 				android:exported="false" />
+		<activity
+				android:name=".DevolucionesActivity"
+				android:exported="false" />
+		<activity
+				android:name=".Modulos_movimientosActivity"
+				android:exported="false" />
 	</application>
 
 </manifest>

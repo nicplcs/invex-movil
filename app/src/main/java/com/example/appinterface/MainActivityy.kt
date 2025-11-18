@@ -32,15 +32,15 @@ class MainActivityy : AppCompatActivity() {
         cardMovimientos.setOnClickListener {
             animateCardClick(it as MaterialCardView)
             Toast.makeText(this, "Gestión de Movimientos", Toast.LENGTH_SHORT).show()
-            //MovimientosActivity
-            val intent = Intent(this, MovimientosActivity::class.java)
+
+            val intent = Intent(this, Modulos_movimientosActivity::class.java)
             startActivity(intent)
         }
 
         cardProductos.setOnClickListener {
             animateCardClick(it as MaterialCardView)
             Toast.makeText(this, "Gestión de Productos", Toast.LENGTH_SHORT).show()
-            //ProductosActivity
+
             val intent = Intent(this, ProductosActivity::class.java)
             startActivity(intent)
         }
@@ -48,7 +48,7 @@ class MainActivityy : AppCompatActivity() {
         cardUsuarios.setOnClickListener {
             animateCardClick(it as MaterialCardView)
             Toast.makeText(this, "Gestión de Usuarios", Toast.LENGTH_SHORT).show()
-            //UsuariosActivity
+
             val intent = Intent(this, usuariosActivity::class.java)
             startActivity(intent)
         }
