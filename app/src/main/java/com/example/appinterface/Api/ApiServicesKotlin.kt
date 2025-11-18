@@ -11,8 +11,7 @@ import retrofit2.http.Path
 
 interface ApiServicesKotlin {
 
-
-    // USUARIOS
+    //USUARIOS
 
     @GET("/usuarios")
     fun getUsuarios(): Call<List<Usuario>>
@@ -26,13 +25,15 @@ interface ApiServicesKotlin {
     @DELETE("/usuarios/{id}")
     fun eliminarUsuario(@Path("id") id: Int): Call<Void>
 
-    //MOVIMIENTOS
+
+    // MOVIMIENTOS
 
     @GET("/movimientos")
     fun getMovimientos(): Call<List<Movimiento>>
 
     @HTTP(method = "DELETE", path = "eliminarMovimiento", hasBody = true)
     fun deleteMovimiento(@Body movimiento: Movimiento): Call<Void>
+
 
     //PRODUCTOS
 
@@ -42,8 +43,20 @@ interface ApiServicesKotlin {
     @POST("/productos")
     fun crearProducto(@Body producto: Producto): Call<Void>
 
-    //DEVOLUCIONES
+    @PUT("/productos/{id}")
+    fun actualizarProducto(
+        @Path("id") id: Int,
+        @Body producto: Producto
+    ): Call<Void>
+
+    @DELETE("/productos/{id}")
+    fun eliminarProducto(
+        @Path("id") id: Int
+    ): Call<Void>
+  
+      //DEVOLUCIONES
 
     @GET("/devoluciones")
     fun getDevoluciones(): Call<List<Devolucion>>
+
 }

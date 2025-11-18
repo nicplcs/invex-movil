@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.Api.Producto
 import com.example.appinterface.R
 
-class ProductosAdapter(private val productos: List<Producto>) :
+class ProductosAdapter(private val productos: MutableList<Producto>) :
     RecyclerView.Adapter<ProductosAdapter.ProductoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder {
@@ -20,24 +20,29 @@ class ProductosAdapter(private val productos: List<Producto>) :
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
         val p = productos[position]
 
-
         holder.txtNombre.text = p.nombre
-
 
         val estadoLegible = if (p.estado == "1") "Activo" else "Inactivo"
         holder.txtIdEstado.text = "ID: ${p.idProducto}   •   Estado: $estadoLegible"
 
-
         holder.txtPrecio.text = "Precio: ${"%.2f".format(p.precio)}"
 
+        holder.txtStocks.text =
+            "Stock: ${p.stock}   •   Min: ${p.stockMinimo}   •   Max: ${p.stockMaximo}   •   Actual: ${p.stockActual}"
 
-        holder.txtStocks.text = "Stock: ${p.stock}   •   Min: ${p.stockMinimo}   •   Max: ${p.stockMaximo}   •   Actual: ${p.stockActual}"
-
-
-        holder.txtRelaciones.text = "Categoría: ${p.idCategoria}   •   Proveedor: ${p.idProveedor}"
+        holder.txtRelaciones.text =
+            "Categoría: ${p.idCategoria}   •   Proveedor: ${p.idProveedor}"
     }
 
     override fun getItemCount(): Int = productos.size
+
+    fun getProducto(position: Int): Producto = productos[position]
+
+    fun updateList(nuevaLista: List<Producto>) {
+        productos.clear()
+        productos.addAll(nuevaLista)
+        notifyDataSetChanged()
+    }
 
     class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtNombre: TextView = itemView.findViewById(R.id.txtNombreProducto)
