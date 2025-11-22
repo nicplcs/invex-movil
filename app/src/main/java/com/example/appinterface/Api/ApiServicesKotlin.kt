@@ -11,6 +11,22 @@ import retrofit2.http.Path
 
 interface ApiServicesKotlin {
 
+    // GET: Obtener todos los proveedores
+    @GET("proveedores")
+    fun getProveedores(): Call<List<Proveedor>>
+
+    // POST: Crear proveedor
+    @POST("proveedores")
+    fun crearProveedor(@Body proveedor: Proveedor): Call<Proveedor>
+
+    // PUT: Actualizar proveedor
+    @PUT("proveedores/{id}")
+    fun actualizarProveedor(@Path("id") id: Int, @Body proveedor: Proveedor): Call<Proveedor>
+
+    // DELETE: Eliminar proveedor
+    @DELETE("proveedores/{id}")
+    fun eliminarProveedor(@Path("id") id: Int): Call<Void>
+
     //USUARIOS
 
     @GET("/usuarios")

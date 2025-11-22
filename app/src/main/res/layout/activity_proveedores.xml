@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="#1a1a1a">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gestión Proveedores"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp" />
+
+    <!-- Botón para mostrar/ocultar formulario -->
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnToggleForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+ Agregar Nuevo Proveedor"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_margin="16dp"
+            app:cornerRadius="12dp" />
+
+    <!-- Formulario colapsable -->
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardFormulario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#2a2a2a"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Estado"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    app:boxStrokeColor="#6200EE"
+                    app:hintTextColor="#FFD700">
+
+                <AutoCompleteTextView
+                        android:id="@+id/spinnerEstado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="#FFFFFF" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                    android:id="@+id/nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Nombre del proveedor"
+                    android:textColorHint="#888888"
+                    android:textColor="#FFFFFF"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp" />
+
+            <EditText
+                    android:id="@+id/direccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Dirección (opcional)"
+                    android:textColorHint="#888888"
+                    android:textColor="#FFFFFF"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp" />
+
+            <EditText
+                    android:id="@+id/contacto"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Teléfono de contacto"
+                    android:inputType="phone"
+                    android:textColorHint="#888888"
+                    android:textColor="#FFFFFF"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Registrar proveedor"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#6200EE"
+                    android:layout_marginTop="16dp"
+                    app:cornerRadius="12dp"
+                    android:onClick="crearProveedor" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- RecyclerView para lista -->
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyProveedores"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="8dp" />
+
+</LinearLayout>

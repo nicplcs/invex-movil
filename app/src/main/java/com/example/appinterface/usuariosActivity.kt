@@ -76,23 +76,6 @@ class usuariosActivity : AppCompatActivity() {
         ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)
 
         cargarUsuarios()
-
-
-       /* val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_usuarios -> true
-                R.id.navigation_productos -> {
-                    startActivity(Intent(this, ProductosActivity::class.java))
-                    true
-                }
-                R.id.navgation_movimientos -> {
-                    startActivity(Intent(this, MovimientosActivity::class.java))
-                    true
-                }
-                else -> false
-            }
-        }*/
     }
 
 
@@ -150,11 +133,13 @@ class usuariosActivity : AppCompatActivity() {
                             usuarioEditando = null
                         } else {
                             Toast.makeText(this@usuariosActivity, "Error al actualizar: ${response.code()}", Toast.LENGTH_LONG).show()
+                            cargarUsuarios()
                         }
                     }
 
                     override fun onFailure(call: Call<Usuario>, t: Throwable) {
                         Toast.makeText(this@usuariosActivity, "Error actualizar: ${t.message}", Toast.LENGTH_LONG).show()
+                        cargarUsuarios()
                     }
                 })
         } else {
@@ -170,17 +155,19 @@ class usuariosActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                     if (response.isSuccessful && response.body() != null) {
                         Toast.makeText(this@usuariosActivity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
-                        adapter.addUsuario(response.body()!!)
+                        cargarUsuarios()
                         limpiarFormulario()
                         findViewById<CardView>(R.id.cardFormulario).visibility = View.GONE
                         findViewById<MaterialButton>(R.id.btnToggleForm).text = "+ Agregar Nuevo Usuario"
                     } else {
                         Toast.makeText(this@usuariosActivity, "Error al crear: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        cargarUsuarios()
                     }
                 }
 
                 override fun onFailure(call: Call<Usuario>, t: Throwable) {
                     Toast.makeText(this@usuariosActivity, "Error crear: ${t.message}", Toast.LENGTH_LONG).show()
+                    cargarUsuarios()
                 }
             })
         }
@@ -200,11 +187,13 @@ class usuariosActivity : AppCompatActivity() {
                                 cargarUsuarios()
                             } else {
                                 Toast.makeText(this@usuariosActivity, "Error al eliminar: ${response.code()}", Toast.LENGTH_SHORT).show()
+                                cargarUsuarios()
                             }
                         }
 
                         override fun onFailure(call: Call<Void>, t: Throwable) {
                             Toast.makeText(this@usuariosActivity, "Error eliminar: ${t.message}", Toast.LENGTH_LONG).show()
+                            cargarUsuarios()
                         }
                     })
             }
