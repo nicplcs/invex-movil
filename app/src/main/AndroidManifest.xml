@@ -45,6 +45,16 @@
 		<activity
 				android:name=".Modulos_movimientosActivity"
 				android:exported="false" />
+
+		<!-- PROVEEDORES -->
+		<activity
+				android:name=".ProveedoresActivity"
+				android:exported="false" />
+
+		<activity
+				android:name=".Modulos_usuariosActivity"
+				android:exported="false" />
+
 	</application>
 
 </manifest>
