@@ -1,5 +1,6 @@
 package com.example.appinterface.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.example.appinterface.R
 
 class DevolucionesAdapter (
 
-    private val devoluciones: List<Devolucion>,
+    private val devoluciones: MutableList<Devolucion>
 ) : RecyclerView.Adapter<DevolucionesAdapter.DevolucionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevolucionViewHolder {
@@ -21,10 +22,25 @@ class DevolucionesAdapter (
     }
 
     override fun onBindViewHolder(holder: DevolucionViewHolder, position: Int) {
+
+        Log.d("AdapterBind", "Posición $position: ${devoluciones[position]}")
+        Log.d("AdapterBind", "ID: ${devoluciones[position].id_devolucion}")
         holder.bind(devoluciones[position])
     }
 
     override fun getItemCount(): Int = devoluciones.size
+
+    fun getDevolucion(position: Int): Devolucion = devoluciones[position]
+
+    fun updateList(newList: List<Devolucion>){
+        devoluciones.clear()
+        devoluciones.addAll(newList)
+        notifyDataSetChanged()
+    }
+    fun addDevolucion(devolucion: Devolucion) {
+        devoluciones.add(devolucion)
+        notifyItemInserted(devoluciones.size - 1)
+    }
 
     class DevolucionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvId_devolucion: TextView = itemView.findViewById(R.id.tvId_devolucion)

@@ -4,29 +4,37 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.Adapter.DevolucionesAdapter
 import com.example.appinterface.Api.Devolucion
 import com.example.appinterface.Api.RetrofitInstance
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DevolucionesActivity : AppCompatActivity(){
+class DevolucionesActivity : AppCompatActivity() {
 
+    private var devolucionEditando: Devolucion? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: DevolucionesAdapter
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvNoData: TextView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_devoluciones)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -36,51 +44,274 @@ class DevolucionesActivity : AppCompatActivity(){
         }
 
         recyclerView = findViewById(R.id.recyclerDevoluciones)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        progressBar = findViewById(R.id.progressBar)
+        tvNoData = findViewById(R.id.tvNoData)
 
-        val btnMostrar = findViewById<Button>(R.id.btnMostrarDevoluciones)
-        btnMostrar.setOnClickListener { view ->
-            mostrardevoluciones(view)
-        }
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = DevolucionesAdapter(mutableListOf())
+        recyclerView.adapter = adapter
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Gestión de Devoluciones"
+
+        val cardFormulario = findViewById<CardView>(R.id.cardFormulario)
+        val btnToggleForm = findViewById<MaterialButton>(R.id.btnToggleForm)
+
+        btnToggleForm.setOnClickListener {
+            if (cardFormulario.visibility == View.GONE) {
+                cardFormulario.visibility = View.VISIBLE
+                btnToggleForm.text = "- Ocultar Formulario"
+            } else {
+                cardFormulario.visibility = View.GONE
+                btnToggleForm.text = "+ Agregar Nueva Devolución"
+                limpiarFormulario()
+            }
+        }
+
+        val swipeHandler = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                rv: RecyclerView,
+                vh: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = false
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val devolucion = adapter.getDevolucion(position)
+
+                if (direction == ItemTouchHelper.RIGHT) {
+                    cargarDevolucionEnFormulario(devolucion)
+                    adapter.notifyItemChanged(position)
+                } else {
+                    confirmarEliminar(devolucion)
+                }
+            }
+        }
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)
+
+
+        cargarDevoluciones()
     }
 
-    fun mostrardevoluciones(v: View) {
-        recyclerView.visibility = View.VISIBLE
+    private fun cargarDevoluciones() {
+        progressBar.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+        tvNoData.visibility = View.GONE
+
+        Log.d("DevolucionesActivity", "Cargando devoluciones...")
 
         RetrofitInstance.api2kotlin.getDevoluciones().enqueue(object : Callback<List<Devolucion>> {
             override fun onResponse(call: Call<List<Devolucion>>, response: Response<List<Devolucion>>) {
-                Log.d("DevolucionesActivity", "Respuesta recibida - Código: ${response.code()}")
+                progressBar.visibility = View.GONE
 
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    Log.d("DevolucionesActivity", "Datos: ${data?.size ?: 0} devoluciones")
+                Log.d("DevolucionesActivity", "Respuesta - Código: ${response.code()}")
+                Log.d("DevolucionesActivity", "Exitosa: ${response.isSuccessful}")
 
-                    if (data != null && data.isNotEmpty()) {
+                if (response.isSuccessful && response.body() != null) {
+                    val data = response.body()!!
 
-                        val adapter = DevolucionesAdapter(data)
-                        recyclerView.adapter = adapter
-                        Toast.makeText(this@DevolucionesActivity, "${data.size} devoluciones cargadss", Toast.LENGTH_SHORT).show()
-                        } else {
-                        Log.e("DevolucionesActivity", "Lista vacía")
-                        Toast.makeText(this@DevolucionesActivity, "No hay devoluciones disponibles", Toast.LENGTH_SHORT).show()
-                        }
+                    Log.d("DevolucionesActivity", "Total devoluciones: ${data.size}")
+
+                    data.forEachIndexed { index, devolucion ->
+                        Log.d("DevolucionesActivity", "[$index] ID: ${devolucion.id_devolucion}, Motivo: ${devolucion.motivo}")
+                    }
+                    if (data.isNotEmpty()) {
+                        recyclerView.visibility = View.VISIBLE
+                        adapter.updateList(data)
+                        Toast.makeText(this@DevolucionesActivity, "Lista actualizada", Toast.LENGTH_SHORT).show()
+                    } else {
+                        tvNoData.visibility = View.VISIBLE
+                        Toast.makeText(this@DevolucionesActivity, "No hay devoluciones", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                        Log.e("DevolucionesActivity", "Error: ${response.code()}")
-                        Toast.makeText(this@DevolucionesActivity, "Error en la respuesta de la API", Toast.LENGTH_SHORT).show()
-                        }
+
+                    Log.e("DevolucionesActivity", "Error al cargar: ${response.code()}")
+                    Log.e("DevolucionesActivity", "Mensaje: ${response.message()}")
+                    Log.e("DevolucionesActivity", "ErrorBody: ${response.errorBody()?.string()}")
+
+                    tvNoData.visibility = View.VISIBLE
+                    tvNoData.text = "Error al cargar datos"
+                    Toast.makeText(this@DevolucionesActivity, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
+            }
+
             override fun onFailure(call: Call<List<Devolucion>>, t: Throwable) {
-                Log.e("DevolucionesActivity", "Error de conexión: ${t.message}")
-                Toast.makeText(this@DevolucionesActivity, "Error de conexión con la API: ${t.message}", Toast.LENGTH_LONG).show()
+                progressBar.visibility = View.GONE
+                tvNoData.visibility = View.VISIBLE
+                tvNoData.text = "Error de conexión"
+                Log.e("DevolucionesActivity", "Error de conexión: ${t.message}", t)
+                Toast.makeText(this@DevolucionesActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
             }
         })
- }
+    }
+
+    fun crearDevolucion(v: View) {
+        val cantidadStr = findViewById<TextInputEditText>(R.id.etCantidad).text.toString()
+        val motivo = findViewById<TextInputEditText>(R.id.etMotivo).text.toString()
+        val fechaDevolucion = findViewById<TextInputEditText>(R.id.etFechaDevolucion).text.toString()
+        val idOrdenSalidaStr = findViewById<TextInputEditText>(R.id.etIdOrdenSalida).text.toString()
+        val idProductoStr = findViewById<TextInputEditText>(R.id.etIdProducto).text.toString()
+
+        Log.d("DevolucionForm", "=== DATOS DEL FORMULARIO ===")
+        Log.d("DevolucionForm", "Cantidad: '$cantidadStr'")
+        Log.d("DevolucionForm", "Motivo: '$motivo'")
+        Log.d("DevolucionForm", "Fecha: '$fechaDevolucion'")
+        Log.d("DevolucionForm", "ID Orden: '$idOrdenSalidaStr'")
+        Log.d("DevolucionForm", "ID Producto: '$idProductoStr'")
+        Log.d("DevolucionForm", "Editando? ${devolucionEditando != null}")
+        Log.d("DevolucionForm", "ID Editando: ${devolucionEditando?.id_devolucion}")
+
+        if (cantidadStr.isEmpty() || motivo.isEmpty() || fechaDevolucion.isEmpty() ||
+            idOrdenSalidaStr.isEmpty() || idProductoStr.isEmpty()) {
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val cantidad = cantidadStr.toIntOrNull()
+        val idOrdenSalida = idOrdenSalidaStr.toIntOrNull()
+        val idProducto = idProductoStr.toIntOrNull()
+
+        if (cantidad == null || cantidad <= 0) {
+            Toast.makeText(this, "Cantidad inválida", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (idOrdenSalida == null || idProducto == null) {
+            Toast.makeText(this, "IDs inválidos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (devolucionEditando != null) {
+            val devolucionActualizada = Devolucion(
+                devolucionEditando!!.id_devolucion,
+                cantidad,
+                motivo,
+                fechaDevolucion,
+                idOrdenSalida,
+                idProducto
+            )
+            Log.d("DevolucionPUT", "Enviando actualización: $devolucionActualizada")
+
+            RetrofitInstance.api2kotlin.updateDevolucion(devolucionEditando!!.id_devolucion, devolucionActualizada)
+                .enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+
+                        Log.d("DevolucionPUT", "Código respuesta: ${response.code()}")
+                        Log.d("DevolucionPUT", "Respuesta exitosa: ${response.isSuccessful}")
+                        Log.d("DevolucionPUT", "Body: ${response.body()}")
+                        Log.d("DevolucionPUT", "ErrorBody: ${response.errorBody()?.string()}")
+
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@DevolucionesActivity, "Devolución actualizada", Toast.LENGTH_SHORT).show()
+                            limpiarFormulario()
+                            findViewById<CardView>(R.id.cardFormulario).visibility = View.GONE
+                            findViewById<MaterialButton>(R.id.btnToggleForm).text = "+ Agregar Nueva Devolución"
+                            cargarDevoluciones()
+                            devolucionEditando = null
+                        } else {
+                            Toast.makeText(this@DevolucionesActivity, "Error al actualizar: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(this@DevolucionesActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+                    }
+                })
+        } else {
+
+            val nuevaDevolucion = Devolucion(
+                0,
+                cantidad,
+                motivo,
+                fechaDevolucion,
+                idOrdenSalida,
+                idProducto
+            )
+
+            Log.d("DevolucionPOST", "Enviando nueva devolución: $nuevaDevolucion")
+
+            RetrofitInstance.api2kotlin.createDevolucion(nuevaDevolucion)
+                .enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+
+                        Log.d("DevolucionPOST", "Código respuesta: ${response.code()}")
+                        Log.d("DevolucionPOST", "Respuesta exitosa: ${response.isSuccessful}")
+                        Log.d("DevolucionPOST", "Body: ${response.body()}")
+                        Log.d("DevolucionPOST", "ErrorBody: ${response.errorBody()?.string()}")
+
+                        if (response.isSuccessful ) {
+                            Toast.makeText(
+                                this@DevolucionesActivity,
+                                "Devolución registrada",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            cargarDevoluciones()
+
+                            limpiarFormulario()
+                            findViewById<CardView>(R.id.cardFormulario).visibility = View.GONE
+                            findViewById<MaterialButton>(R.id.btnToggleForm).text = "+ Agregar Nueva Devolución"
+                        } else {
+                            Toast.makeText(this@DevolucionesActivity, "Error al crear: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(this@DevolucionesActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+                    }
+                })
+        }
+    }
+
+    private fun confirmarEliminar(devolucion: Devolucion) {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar Devolución")
+            .setMessage("¿Eliminar la devolución?\nMotivo: ${devolucion.motivo}")
+            .setPositiveButton("Eliminar") { _, _ ->
+                RetrofitInstance.api2kotlin.deleteDevolucion(devolucion.id_devolucion)
+                    .enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@DevolucionesActivity, "Devolución eliminada", Toast.LENGTH_SHORT).show()
+                                cargarDevoluciones()
+                            } else {
+                                Toast.makeText(this@DevolucionesActivity, "Error al eliminar: ${response.code()}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(this@DevolucionesActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
+                        }
+                    })
+            }
+            .setNegativeButton("Cancelar") { _, _ -> cargarDevoluciones() }
+            .show()
+    }
+    private fun cargarDevolucionEnFormulario(devolucion: Devolucion) {
+        devolucionEditando = devolucion
+        findViewById<TextInputEditText>(R.id.etCantidad).setText(devolucion.cantidad.toString())
+        findViewById<TextInputEditText>(R.id.etMotivo).setText(devolucion.motivo)
+        findViewById<TextInputEditText>(R.id.etFechaDevolucion).setText(devolucion.fecha_devolucion)
+        findViewById<TextInputEditText>(R.id.etIdOrdenSalida).setText(devolucion.id_ordensalida.toString())
+        findViewById<TextInputEditText>(R.id.etIdProducto).setText(devolucion.id_producto.toString())
+        findViewById<CardView>(R.id.cardFormulario).visibility = View.VISIBLE
+        findViewById<MaterialButton>(R.id.btnToggleForm).text = "- Cancelar Edición"
+        findViewById<MaterialButton>(R.id.btnGuardar).text = "Actualizar Devolución"
+    }
+    private fun limpiarFormulario() {
+        findViewById<TextInputEditText>(R.id.etCantidad).setText("")
+        findViewById<TextInputEditText>(R.id.etMotivo).setText("")
+        findViewById<TextInputEditText>(R.id.etFechaDevolucion).setText("")
+        findViewById<TextInputEditText>(R.id.etIdOrdenSalida).setText("")
+        findViewById<TextInputEditText>(R.id.etIdProducto).setText("")
+        findViewById<MaterialButton>(R.id.btnGuardar).text = "Registrar Devolución"
+        devolucionEditando = null
+    }
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
-
 }
