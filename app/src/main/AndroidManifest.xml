@@ -35,6 +35,17 @@
 		<activity android:name=".ProductosActivity"
 				  android:exported="true">
 		</activity>
+
+		<activity
+				android:name=".Modulos_productosActivity"
+				android:exported="false" />
+		<activity
+				android:name=".EntradaProductosActivity"
+				android:exported="false" />
+		<activity
+				android:name=".SalidaProductosActivity"
+				android:exported="false" />
+
 		<!-- MOVIMIENTOSSSS -->
 		<activity
 				android:name=".MovimientosActivity"
