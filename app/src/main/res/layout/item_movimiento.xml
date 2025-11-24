@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Responsable del movimiento"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"/>
 
@@ -52,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Descripción del movimiento"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"/>
 
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="Fecha: 2025-10-31"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_marginTop="4dp"/>
 
@@ -70,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="ID del producto"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_margin="4dp"/>
         <TextView
@@ -78,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:text="Cantidad del movimiento"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_margin="4dp"/>
         <TextView
@@ -86,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="Accion del movimiento"
                 android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_margin="4dp"/>
 

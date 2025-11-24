@@ -59,4 +59,13 @@ interface ApiServicesKotlin {
     @GET("/devoluciones")
     fun getDevoluciones(): Call<List<Devolucion>>
 
+    @POST("/devoluciones")
+    fun createDevolucion (@Body devolucion: Devolucion): Call<Void>
+
+    @PUT("/devoluciones/{id}")
+    fun updateDevolucion(@Path("id") id: Int,@Body devolucion: Devolucion): Call<Void>
+
+    @DELETE("/devoluciones/{id}")
+    fun deleteDevolucion(@Path("id") id: Int): Call<Void>
+
 }
