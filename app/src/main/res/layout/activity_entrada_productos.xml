@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1a1a1a"
+            tools:context=".EntradaProductosActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entrada de Productos"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_marginBottom="16dp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecciona un producto:"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        <Spinner
+                android:id="@+id/spinnerProductoEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad a ingresar:"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        <EditText
+                android:id="@+id/etCantidadEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Cantidad"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:layout_marginBottom="24dp" />
+
+        <Button
+                android:id="@+id/btnConfirmarEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirmar Entrada" />
+
+        <!-- Botón VOLVER -->
+        <Button
+                android:id="@+id/btnVolverEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volver"
+                android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>

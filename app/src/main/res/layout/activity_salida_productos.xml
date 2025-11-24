@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#1a1a1a"
+            tools:context=".SalidaProductosActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+        <!-- TÍTULO -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Salida de Productos"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_marginBottom="16dp" />
+
+        <!-- LABEL -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecciona un producto:"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        <!-- SPINNER -->
+        <Spinner
+                android:id="@+id/spinnerProductoSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+        <!-- LABEL -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad a retirar:"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        <!-- INPUT CANTIDAD -->
+        <EditText
+                android:id="@+id/etCantidadSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Cantidad"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:layout_marginBottom="24dp" />
+
+        <!-- BOTÓN CONFIRMAR -->
+        <Button
+                android:id="@+id/btnConfirmarSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirmar Salida" />
+
+        <!-- BOTÓN VOLVER -->
+        <Button
+                android:id="@+id/btnVolverSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volver"
+                android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>
+

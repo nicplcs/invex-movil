@@ -41,9 +41,10 @@ class MainActivityy : AppCompatActivity() {
             animateCardClick(it as MaterialCardView)
             Toast.makeText(this, "Gestión de Productos", Toast.LENGTH_SHORT).show()
 
-            val intent = Intent(this, ProductosActivity::class.java)
+            val intent = Intent(this, Modulos_productosActivity::class.java)
             startActivity(intent)
         }
+
 
         cardUsuarios.setOnClickListener {
             animateCardClick(it as MaterialCardView)
