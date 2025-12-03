@@ -34,7 +34,7 @@ class usuariosActivity : AppCompatActivity() {
 
         val spinnerRol = findViewById<AutoCompleteTextView>(R.id.spinnerRol)
         val spinnerEstado = findViewById<AutoCompleteTextView>(R.id.spinnerEstado)
-        val roles = arrayOf("Administrador", "Empleado")
+        val roles = arrayOf("administrador", "Empleado")
         val estados = arrayOf("Activo", "Inactivo")
         spinnerRol.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roles))
         spinnerEstado.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, estados))
@@ -81,7 +81,7 @@ class usuariosActivity : AppCompatActivity() {
 
     // GET: Cargar usuarios
     private fun cargarUsuarios() {
-        RetrofitInstance.api2kotlin.getUsuarios().enqueue(object : Callback<List<Usuario>> {
+        RetrofitInstance.getApi(this).getUsuarios().enqueue(object : Callback<List<Usuario>> {
             override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
                 if (response.isSuccessful && response.body() != null) {
                     adapter.updateList(response.body()!!)
@@ -121,7 +121,7 @@ class usuariosActivity : AppCompatActivity() {
                 if (fechaNacimiento.isEmpty()) null else fechaNacimiento, estadoSeleccionado
             )
 
-            RetrofitInstance.api2kotlin.actualizarUsuario(usuarioEditando!!.id_usuario, usuarioActualizado)
+            RetrofitInstance.getApi(this).actualizarUsuario(usuarioEditando!!.id_usuario, usuarioActualizado)
                 .enqueue(object : Callback<Usuario> {
                     override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                         if (response.isSuccessful) {
@@ -151,7 +151,7 @@ class usuariosActivity : AppCompatActivity() {
                 if (fechaNacimiento.isEmpty()) null else fechaNacimiento, estadoSeleccionado
             )
 
-            RetrofitInstance.api2kotlin.crearUsuario(nuevoUsuario).enqueue(object : Callback<Usuario> {
+            RetrofitInstance.getApi(this).crearUsuario(nuevoUsuario).enqueue(object : Callback<Usuario> {
                 override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                     if (response.isSuccessful && response.body() != null) {
                         Toast.makeText(this@usuariosActivity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
@@ -179,7 +179,7 @@ class usuariosActivity : AppCompatActivity() {
             .setTitle("Eliminar Usuario")
             .setMessage("¿Eliminar a ${usuario.nombre}?")
             .setPositiveButton("Eliminar") { _, _ ->
-                RetrofitInstance.api2kotlin.eliminarUsuario(usuario.id_usuario)
+                RetrofitInstance.getApi(this).eliminarUsuario(usuario.id_usuario)
                     .enqueue(object : Callback<Void> {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             if (response.isSuccessful) {
