@@ -84,6 +84,9 @@ interface ApiServicesKotlin {
     @DELETE("/devoluciones/{id}")
     fun deleteDevolucion(@Path("id") id: Int): Call<Void>
 
+    // LOGIN
+    @POST("auth/login")
+    fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
 
 }

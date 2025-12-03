@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#1a1a1a"
-        tools:context=".MainActivity"
+        tools:context=".MainActivityy"
         android:fitsSystemWindows="true">
 
     <!-- Header con logo -->
@@ -232,6 +232,19 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <Button
+                    android:id="@+id/btnCerrarSesion"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Cerrar Sesión"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#F44336"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="32dp"
+                    app:cornerRadius="12dp"/>
+
+
         </LinearLayout>
     </ScrollView>
 
@@ -249,4 +262,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
