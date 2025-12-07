@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +32,7 @@ class DevolucionesActivity : AppCompatActivity() {
     private lateinit var adapter: DevolucionesAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var tvNoData: TextView
+    private lateinit var btnRegresar: LinearLayout
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +48,15 @@ class DevolucionesActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerDevoluciones)
         progressBar = findViewById(R.id.progressBar)
         tvNoData = findViewById(R.id.tvNoData)
+        btnRegresar = findViewById<LinearLayout>(R.id.btnRegresar)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = DevolucionesAdapter(mutableListOf())
         recyclerView.adapter = adapter
+        val btnRegresar = findViewById<LinearLayout>(R.id.btnRegresar)
+        btnRegresar.setOnClickListener {
+            finish()
+        }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Gestión de Devoluciones"
@@ -60,10 +67,10 @@ class DevolucionesActivity : AppCompatActivity() {
         btnToggleForm.setOnClickListener {
             if (cardFormulario.visibility == View.GONE) {
                 cardFormulario.visibility = View.VISIBLE
-                btnToggleForm.text = "- Ocultar Formulario"
+                btnToggleForm.text = "Ocultar Formulario"
             } else {
                 cardFormulario.visibility = View.GONE
-                btnToggleForm.text = "+ Agregar Nueva Devolución"
+                btnToggleForm.text = "Agregar Nueva Devolución"
                 limpiarFormulario()
             }
         }
@@ -103,7 +110,7 @@ class DevolucionesActivity : AppCompatActivity() {
 
         Log.d("DevolucionesActivity", "Cargando devoluciones...")
 
-        RetrofitInstance.api2kotlin.getDevoluciones().enqueue(object : Callback<List<Devolucion>> {
+        RetrofitInstance.getApi(this).getDevoluciones().enqueue(object : Callback<List<Devolucion>> {
             override fun onResponse(call: Call<List<Devolucion>>, response: Response<List<Devolucion>>) {
                 progressBar.visibility = View.GONE
 
@@ -195,7 +202,7 @@ class DevolucionesActivity : AppCompatActivity() {
             )
             Log.d("DevolucionPUT", "Enviando actualización: $devolucionActualizada")
 
-            RetrofitInstance.api2kotlin.updateDevolucion(devolucionEditando!!.id_devolucion, devolucionActualizada)
+            RetrofitInstance.getApi(this).updateDevolucion(devolucionEditando!!.id_devolucion, devolucionActualizada)
                 .enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
 
@@ -233,7 +240,7 @@ class DevolucionesActivity : AppCompatActivity() {
 
             Log.d("DevolucionPOST", "Enviando nueva devolución: $nuevaDevolucion")
 
-            RetrofitInstance.api2kotlin.createDevolucion(nuevaDevolucion)
+            RetrofitInstance.getApi(this).createDevolucion(nuevaDevolucion)
                 .enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
 
@@ -271,7 +278,7 @@ class DevolucionesActivity : AppCompatActivity() {
             .setTitle("Eliminar Devolución")
             .setMessage("¿Eliminar la devolución?\nMotivo: ${devolucion.motivo}")
             .setPositiveButton("Eliminar") { _, _ ->
-                RetrofitInstance.api2kotlin.deleteDevolucion(devolucion.id_devolucion)
+                RetrofitInstance.getApi(this).deleteDevolucion(devolucion.id_devolucion)
                     .enqueue(object : Callback<Void> {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             if (response.isSuccessful) {

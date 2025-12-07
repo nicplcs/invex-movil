@@ -4,77 +4,190 @@
                                    android:id="@+id/cardView"
                                    android:layout_width="match_parent"
                                    android:layout_height="wrap_content"
-                                   android:layout_marginBottom="10dp"
-                                   app:cardCornerRadius="10dp"
-                                   app:cardBackgroundColor="#1E1E1E"
-                                   app:cardElevation="4dp">
+                                   android:layout_margin="8dp"
+                                   app:cardCornerRadius="20dp"
+                                   app:cardBackgroundColor="#1AFFFFFF"
+                                   app:cardElevation="12dp">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="20dp"
+            android:background="@drawable/card_glass_background">
 
-        <TextView
-                android:id="@+id/tvId_devolucion"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Id de devolucion"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
 
-        <TextView
-                android:id="@+id/tvCantidad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cantidad de la devolucion"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+            <TextView
+                    android:id="@+id/tvId_devolucion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID: 001"
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="#1AFFFFFF"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="6dp"
+                    android:layout_marginEnd="8dp"/>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DEVOLUCIÓN"
+                    android:textColor="#FFB3BA"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:background="#4Ddc3545"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="6dp"/>
+        </LinearLayout>
 
         <TextView
                 android:id="@+id/tvMotivo"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Motivo de la devolucion"
+                android:text="Producto defectuoso"
                 android:textColor="#FFFFFF"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="3"
+                android:layout_marginBottom="16dp"/>
 
-        <TextView
-                android:id="@+id/tvFecha_devolucion"
-                android:layout_width="wrap_content"
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginBottom="12dp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fecha de la devolucion"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
 
-        <TextView
-                android:id="@+id/tvId_ordensalida"
-                android:layout_width="wrap_content"
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: "
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+            <TextView
+                    android:id="@+id/tvFecha_devolucion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2025-12-06"
+                    android:textColor="#F2FFFFFF"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Id de la orden de salida"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
 
-        <TextView
-                android:id="@+id/tvId_producto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Id del producto de devolucion"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#0DFFFFFF"
+                    android:padding="12dp"
+                    android:layout_marginEnd="4dp">
 
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cantidad"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                <TextView
+                        android:id="@+id/tvCantidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#0DFFFFFF"
+                    android:padding="12dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID Orden"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                <TextView
+                        android:id="@+id/tvId_ordensalida"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ORD-001"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="#0DFFFFFF"
+                    android:padding="12dp"
+                    android:layout_marginStart="4dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID Producto"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                <TextView
+                        android:id="@+id/tvId_producto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PRD-001"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

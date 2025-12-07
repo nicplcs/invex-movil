@@ -3,10 +3,17 @@ package com.example.appinterface
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +33,12 @@ class MovimientosActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MovimientosAdapter
+    private lateinit var btnRegresar: LinearLayout
+    private lateinit var etBuscar: EditText
+    private lateinit var btnLimpiarBusqueda: Button
+
+    private var listaMovimientosOriginal = mutableListOf<Movimiento>()
+    private var listaMovimientosFiltrada = mutableListOf<Movimiento>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,20 +55,43 @@ class MovimientosActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerMovimientos)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val btnMostrar = findViewById<Button>(R.id.btnMostrarMovimientos)
-        btnMostrar.setOnClickListener { view ->
-            mostrarmovimientos(view)
-        }
+        btnRegresar = findViewById<LinearLayout>(R.id.btnRegresar)
+        etBuscar = findViewById(R.id.etBuscar)
+        btnLimpiarBusqueda = findViewById(R.id.btnLimpiarBusqueda)
+
+        setupListeners()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Gestión de Movimientos"
+
+        cargarMovimientos()
     }
 
-    fun mostrarmovimientos(v: View) {
+    private fun setupListeners() {
+
+        btnRegresar.setOnClickListener {
+            finish()
+        }
+        etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                btnLimpiarBusqueda.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                filtrarMovimientos()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+        btnLimpiarBusqueda.setOnClickListener {
+            etBuscar.text.clear()
+        }
+    }
+
+
+    fun cargarMovimientos() {
 
         recyclerView.visibility = View.VISIBLE
 
-        RetrofitInstance.api2kotlin.getMovimientos().enqueue(object : Callback<List<Movimiento>> {
+        RetrofitInstance.getApi(this).getMovimientos().enqueue(object : Callback<List<Movimiento>> {
             override fun onResponse(call: Call<List<Movimiento>>, response: Response<List<Movimiento>>) {
                 Log.d("MovimientosActivity", "Respuesta recibida - Código: ${response.code()}")
 
@@ -64,9 +100,11 @@ class MovimientosActivity : AppCompatActivity() {
                     Log.d("MovimientosActivity", "Datos: ${data?.size ?: 0} movimientos")
 
                     if (data != null && data.isNotEmpty()) {
-                        val mutableData = data.toMutableList()
 
-                        adapter = MovimientosAdapter(mutableData) { movimiento, position ->
+                        listaMovimientosOriginal = data.toMutableList()
+                        listaMovimientosFiltrada = listaMovimientosOriginal.toMutableList()
+
+                        adapter = MovimientosAdapter(listaMovimientosFiltrada) { movimiento, position ->
                             mostrarDialogoEliminar(movimiento, position)
                         }
 
@@ -89,6 +127,38 @@ class MovimientosActivity : AppCompatActivity() {
         })
     }
 
+    private fun filtrarMovimientos() {
+        if (listaMovimientosOriginal.isEmpty()) return
+
+        val textoBusqueda = etBuscar.text.toString().lowercase().trim()
+
+        listaMovimientosFiltrada = if (textoBusqueda.isEmpty()) {
+            listaMovimientosOriginal.toMutableList()
+        } else {
+            listaMovimientosOriginal.filter { movimiento ->
+                (movimiento.descripcion?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (movimiento.usuario_responsable?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (movimiento.id_movimiento?.toString()?.contains(textoBusqueda) ?: false) ||
+                        (movimiento.id_producto?.toString()?.contains(textoBusqueda) ?: false) ||
+                        (movimiento.tipo?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (movimiento.accion?.lowercase()?.contains(textoBusqueda) ?: false)
+            }.toMutableList()
+        }
+
+        actualizarRecyclerView()
+    }
+
+    private fun actualizarRecyclerView() {
+        adapter = MovimientosAdapter(listaMovimientosFiltrada) { movimiento, position ->
+            mostrarDialogoEliminar(movimiento, position)
+        }
+        recyclerView.adapter = adapter
+
+        if (listaMovimientosFiltrada.isEmpty()) {
+            Toast.makeText(this, "No se encontraron movimientos con esos filtros", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun mostrarDialogoEliminar(movimiento: Movimiento, position: Int) {
         AlertDialog.Builder(this)
             .setTitle("Eliminar Movimiento")
@@ -103,10 +173,13 @@ class MovimientosActivity : AppCompatActivity() {
     private fun eliminarMovimiento(movimiento: Movimiento, position: Int) {
         Log.d("MovimientosActivity", "🗑Eliminando movimiento ID: ${movimiento.id_movimiento}")
 
-        RetrofitInstance.api2kotlin.deleteMovimiento(movimiento).enqueue(object : Callback<Void> {
+        RetrofitInstance.getApi(this).deleteMovimiento(movimiento).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Log.d("MovimientosActivity", "Movimiento eliminado exitosamente")
+
+                    listaMovimientosOriginal.removeAll { it.id_movimiento == movimiento.id_movimiento }
+                    listaMovimientosFiltrada.removeAt(position)
 
                     adapter.removeItem(position)
 

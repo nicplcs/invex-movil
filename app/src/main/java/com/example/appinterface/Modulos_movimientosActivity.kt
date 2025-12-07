@@ -2,6 +2,7 @@ package com.example.appinterface
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -23,6 +24,11 @@ class Modulos_movimientosActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Gestión de Inventario"
+
+        val btnRegresar = findViewById<LinearLayout>(R.id.btnRegresar)
+        btnRegresar.setOnClickListener {
+            finish()
+        }
 
         val cardMovimientos = findViewById<CardView>(R.id.cardMovimientos)
         cardMovimientos.setOnClickListener {
