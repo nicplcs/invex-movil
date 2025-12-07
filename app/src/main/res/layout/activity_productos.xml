@@ -1,63 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#121212"
-        tools:context=".ProductosActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="#262640">
 
     <TextView
-            android:id="@+id/textView3"
-            android:text="Productos"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#D4AF37"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.05" />
+            android:text="Gestión de Productos"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp" />
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnToggleForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+ Agregar Nuevo Producto"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6B4FBB"
+            android:layout_margin="16dp"
+            app:cornerRadius="12dp" />
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardFormulario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#3A3A58"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="400dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etNombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="Nombre del producto"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etPrecio"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="Precio"
+                            android:inputType="numberDecimal"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etStock"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="Stock"
+                            android:inputType="number"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etStockMinimo"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="Stock mínimo"
+                            android:inputType="number"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etStockMaximo"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="Stock máximo"
+                            android:inputType="number"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etStockActual"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="Stock actual"
+                            android:inputType="number"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etIdCategoria"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="ID Categoría"
+                            android:inputType="number"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#4D4D6D"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp">
+
+                    <EditText
+                            android:id="@+id/etIdProveedor"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:hint="ID Proveedor"
+                            android:inputType="number"
+                            android:textColorHint="#9E9EB3"
+                            android:textColor="#FFFFFF"
+                            android:padding="12dp"
+                            android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Estado"
+                        android:layout_marginBottom="16dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        app:boxStrokeColor="#6B4FBB"
+                        app:hintTextColor="#6B4FBB"
+                        app:boxBackgroundColor="#4D4D6D">
+
+                    <AutoCompleteTextView
+                            android:id="@+id/spinnerEstado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textColor="#FFFFFF" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGuardar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Registrar Producto"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#6B4FBB"
+                        app:cornerRadius="12dp" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerProductos"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="8dp"
-            app:layout_constraintTop_toBottomOf="@id/textView3"
-            app:layout_constraintBottom_toTopOf="@id/buttonvolver"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_producto" />
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-            android:id="@+id/buttonvolver"
-            android:text="Volver"
-            android:textColor="#000000"
-            android:backgroundTint="#D4AF37"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="volverpag"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintVertical_bias="0.95" />
-
-
-    <Button
-            android:id="@+id/buttonAgregar"
-            android:text="Agregar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="agregarProducto"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintVertical_bias="0.95" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

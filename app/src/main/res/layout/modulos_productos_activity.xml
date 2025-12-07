@@ -12,7 +12,6 @@
             android:gravity="center"
             android:padding="24dp">
 
-        <!-- Título -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,7 +29,6 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="30dp" />
 
-        <!-- CARD 1 - Entrada -->
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardEntrada"
                 android:layout_width="330dp"
@@ -40,7 +38,6 @@
                 android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="8dp"
-                app:strokeColor="#40FFFFFF"
                 app:cardBackgroundColor="#33FFFFFF">
 
             <LinearLayout
@@ -76,7 +73,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- CARD 2 - Salida -->
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardSalida"
                 android:layout_width="330dp"
@@ -86,7 +82,6 @@
                 android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="8dp"
-                app:strokeColor="#40FFFFFF"
                 app:cardBackgroundColor="#33FFFFFF">
 
             <LinearLayout
@@ -122,7 +117,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- CARD 3 - Registrar / CRUD -->
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardRegistrar"
                 android:layout_width="330dp"
@@ -132,7 +126,6 @@
                 android:focusable="true"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="8dp"
-                app:strokeColor="#40FFFFFF"
                 app:cardBackgroundColor="#33FFFFFF">
 
             <LinearLayout
@@ -145,7 +138,7 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📦"
+                        android:text="⚙"
                         android:textSize="48sp"
                         android:textColor="#FFFFFF" />
 
