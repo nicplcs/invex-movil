@@ -6,42 +6,50 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="#121212"
+              android:background="@drawable/gradient_background"
               tools:context=".DevolucionesActivity">
 
-    <!-- Título -->
-    <TextView
-            android:id="@+id/tvTitulo"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gestión de Devoluciones"
-            android:textColor="#FFD700"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:gravity="center"
-            android:padding="16dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="#1A000000">
 
-    <!-- Botón Toggle Formulario -->
-    <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnToggleForm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+ Agregar Nueva Devolución"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#6200EE"
-            android:layout_margin="16dp"
-            app:cornerRadius="12dp"/>
+        <LinearLayout
+                android:id="@+id/btnRegresar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/button_back"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:elevation="6dp">
 
-    <!-- Card del Formulario (oculto por defecto) -->
-    <androidx.cardview.widget.CardView
-            android:id="@+id/cardFormulario"
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:tint="#FFFFFF"
+                    android:layout_marginEnd="8dp" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="gone"
-            app:cardBackgroundColor="#1E1E1E"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="8dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -49,139 +57,215 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-            <!-- Campo: Cantidad -->
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                    android:id="@+id/tvTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Cantidad"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="12dp"
-                    app:boxStrokeColor="#6200EE"
-                    app:hintTextColor="#6200EE">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCantidad"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="#FFFFFF"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Campo: Motivo -->
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Motivo"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="12dp"
-                    app:boxStrokeColor="#6200EE"
-                    app:hintTextColor="#6200EE">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etMotivo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
-                        android:minLines="2"
-                        android:textColor="#FFFFFF"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Campo: Fecha -->
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Fecha (YYYY-MM-DD)"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="12dp"
-                    app:boxStrokeColor="#6200EE"
-                    app:hintTextColor="#6200EE">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etFechaDevolucion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="date"
-                        android:textColor="#FFFFFF"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Campo: ID Orden Salida -->
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="ID Orden Salida"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="12dp"
-                    app:boxStrokeColor="#6200EE"
-                    app:hintTextColor="#6200EE">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etIdOrdenSalida"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="#FFFFFF"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Campo: ID Producto -->
-            <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="ID Producto"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginBottom="16dp"
-                    app:boxStrokeColor="#6200EE"
-                    app:hintTextColor="#6200EE">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etIdProducto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="#FFFFFF"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Botón Guardar -->
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGuardar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Registrar Devolución"
+                    android:text="Devoluciones"
                     android:textColor="#FFFFFF"
-                    android:backgroundTint="#6200EE"
-                    android:onClick="crearDevolucion"
-                    app:cornerRadius="8dp"/>
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    android:gravity="center"
+                    android:shadowColor="#000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="8"
+                    android:layout_marginBottom="8dp"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gestiona las devoluciones de productos"
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"/>
+
+            <Button
+                    android:id="@+id/btnToggleForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="+ Agregar Nueva Devolución"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:background="@drawable/button_gradient"
+                    android:paddingVertical="16dp"
+                    android:elevation="8dp"
+                    android:layout_marginBottom="20dp"/>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFormulario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="#1AFFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="12dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:background="@drawable/card_glass_background">
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="✏Formulario de Devolución"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="20dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Cantidad"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="12dp"
+                            app:boxStrokeColor="#FFFFFF"
+                            app:hintTextColor="#CCFFFFFF"
+                            app:boxBackgroundColor="#26FFFFFF">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCantidad"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:textColor="#FFFFFF"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Motivo de la devolución"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="12dp"
+                            app:boxStrokeColor="#FFFFFF"
+                            app:hintTextColor="#CCFFFFFF"
+                            app:boxBackgroundColor="#26FFFFFF">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMotivo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine"
+                                android:minLines="2"
+                                android:textColor="#FFFFFF"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Fecha (YYYY-MM-DD)"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginBottom="12dp"
+                            app:boxStrokeColor="#FFFFFF"
+                            app:hintTextColor="#CCFFFFFF"
+                            app:boxBackgroundColor="#26FFFFFF">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etFechaDevolucion"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="date"
+                                android:textColor="#FFFFFF"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="16dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:hint="ID Orden"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_marginEnd="8dp"
+                                app:boxStrokeColor="#FFFFFF"
+                                app:hintTextColor="#CCFFFFFF"
+                                app:boxBackgroundColor="#26FFFFFF">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etIdOrdenSalida"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:textColor="#FFFFFF"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:hint="ID Producto"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                app:boxStrokeColor="#FFFFFF"
+                                app:hintTextColor="#CCFFFFFF"
+                                app:boxBackgroundColor="#26FFFFFF">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etIdProducto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number"
+                                    android:textColor="#FFFFFF"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <Button
+                            android:id="@+id/btnGuardar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Registrar Devolución"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:background="@drawable/button_gradient"
+                            android:paddingVertical="14dp"
+                            android:elevation="4dp"
+                            android:onClick="crearDevolucion"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="#FFFFFF"
+                    android:visibility="gone"
+                    android:layout_marginVertical="40dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerDevoluciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingBottom="8dp"
+                    tools:listitem="@layout/item_devolucion"/>
+
+
+            <TextView
+                    android:id="@+id/tvNoData"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:text="No hay devoluciones disponibles"
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:visibility="gone"/>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- ProgressBar -->
-    <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminateTint="#6A1B9A"
-            android:visibility="gone"/>
-
-    <!-- RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerDevoluciones"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="16dp"
-            tools:listitem="@layout/item_devolucion"/>
-
-    <!-- Mensaje sin datos -->
-    <TextView
-            android:id="@+id/tvNoData"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="No hay devoluciones disponibles"
-            android:textColor="#AAAAAA"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:visibility="gone"/>
+    </ScrollView>
 
 </LinearLayout>

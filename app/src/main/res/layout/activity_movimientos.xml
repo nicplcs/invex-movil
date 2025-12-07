@@ -5,8 +5,45 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="#1a1a1a"
+              android:background="@drawable/gradient_background"
               tools:context=".MovimientosActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="#1A000000">
+
+        <LinearLayout
+                android:id="@+id/btnRegresar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/button_back"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:elevation="6dp">
+
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:tint="#FFFFFF"
+                    android:layout_marginEnd="8dp" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -20,28 +57,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Movimientos"
-                android:textColor="#FBFBFB"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:textSize="22sp"
+                android:textSize="28sp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gestiona el inventario de tu almacén"
+                android:textColor="#CCFFFFFF"
+                android:textSize="14sp"
                 android:gravity="center"
                 android:layout_marginBottom="20dp" />
 
-        <Button
-                android:id="@+id/btnMostrarMovimientos"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mostrar Movimientos"
-                android:textAllCaps="false"
-                android:backgroundTint="#000000"
-                android:textColor="#FFFFFF"
-                android:padding="12dp"
-                android:layout_marginBottom="20dp"/>
+                android:orientation="horizontal"
+                android:background="@drawable/search_bar_background"
+                android:padding="4dp"
+                android:gravity="center_vertical"
+                android:elevation="8dp"
+                android:layout_marginBottom="20dp">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_search"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etBuscar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Buscar por descripción, ID, responsable o producto..."
+                    android:textColorHint="#99FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    android:padding="12dp"
+                    android:inputType="text"
+                    android:imeOptions="actionSearch" />
+
+            <Button
+                    android:id="@+id/btnLimpiarBusqueda"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:text="✕"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:background="@drawable/button_clear"
+                    android:visibility="gone" />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerMovimientos"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:visibility="visible"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
                 tools:listitem="@layout/item_movimiento" />
     </LinearLayout>
 
