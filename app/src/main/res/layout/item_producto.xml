@@ -1,50 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="12dp"
-              android:background="#1E1E1E"
-              android:layout_margin="8dp">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_margin="8dp"
+                                   app:cardCornerRadius="12dp"
+                                   app:cardElevation="6dp"
+                                   app:cardBackgroundColor="#9B8DD9">
 
-    <!-- Nombre -->
-    <TextView
-            android:id="@+id/txtNombreProducto"
-            android:layout_width="wrap_content"
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <!-- ID y Estado -->
-    <TextView
-            android:id="@+id/txtIdEstado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="#CCCCCC" />
+        <TextView
+                android:id="@+id/txtNombreProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:textColor="#FFFFFF" />
 
-    <!-- Precio -->
-    <TextView
-            android:id="@+id/txtPrecioProducto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="#CCCCCC" />
+        <TextView
+                android:id="@+id/txtIdEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#C8C8E0"
+                android:textSize="13sp" />
 
-    <!-- Stock actual / min / max -->
-    <TextView
-            android:id="@+id/txtStocks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="#CCCCCC" />
+        <TextView
+                android:id="@+id/txtPrecioProducto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="#C8C8E0"
+                android:textSize="14sp" />
 
-    <!-- IDs relacionales -->
-    <TextView
-            android:id="@+id/txtRelaciones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="#CCCCCC" />
-</LinearLayout>
+        <TextView
+                android:id="@+id/txtStocks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#C8C8E0"
+                android:textSize="13sp" />
+
+        <TextView
+                android:id="@+id/txtRelaciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#C8C8E0"
+                android:textSize="13sp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
