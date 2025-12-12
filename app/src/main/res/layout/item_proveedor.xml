@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   android:id="@+id/cardView"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:layout_margin="8dp"
-                                   app:cardCornerRadius="12dp"
-                                   app:cardElevation="4dp"
-                                   app:cardBackgroundColor="#2a2a2a">
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#4DFFFFFF"
+        app:cardBackgroundColor="#1AFFFFFF">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -17,43 +20,51 @@
 
         <TextView
                 android:id="@+id/tvNombre"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre Proveedor"
-                android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"/>
 
         <TextView
                 android:id="@+id/tvDireccion"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dirección"
-                android:textColor="#CCCCCC"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:textColor="#CCCCCC"
+                android:layout_marginTop="4dp"/>
 
         <TextView
-                android:id="@+id/tvContacto"
-                android:layout_width="match_parent"
+                android:id="@+id/tvTelefono"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contacto"
-                android:textColor="#CCCCCC"
+                android:text="Teléfono"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:textColor="#CCCCCC"
+                android:layout_marginTop="4dp"/>
+
+        <TextView
+                android:id="@+id/tvCorreo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correo"
+                android:textSize="14sp"
+                android:textColor="#CCCCCC"
+                android:layout_marginTop="4dp"/>
 
         <TextView
                 android:id="@+id/tvEstado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Estado"
-                android:textColor="#FFD700"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                android:padding="4dp"
-                android:background="@android:color/transparent" />
+                android:textColor="#FFFFFF"
+                android:background="#33000000"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:layout_marginTop="8dp"/>
 
     </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appinterface.Adapter.ProveedorAdapter
-import com.example.appinterface.Api.RetrofitInstance
 import com.example.appinterface.Api.Proveedor
+import com.example.appinterface.Api.RetrofitInstance
 import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,9 +29,12 @@ class ProveedoresActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_proveedores)
 
-        val spinnerEstado = findViewById<AutoCompleteTextView>(R.id.spinnerEstado)
+        // Configurar el spinner de estado
+        val spinnerEstado = findViewById<Spinner>(R.id.spinnerEstado)
         val estados = arrayOf("Activo", "Inactivo")
-        spinnerEstado.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, estados))
+        val adapterSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_item, estados)
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEstado.adapter = adapterSpinner
 
         val cardFormulario = findViewById<CardView>(R.id.cardFormulario)
         val btnToggleForm = findViewById<MaterialButton>(R.id.btnToggleForm)
@@ -74,7 +77,7 @@ class ProveedoresActivity : AppCompatActivity() {
 
     // GET: Cargar proveedores
     private fun cargarProveedores() {
-        RetrofitInstance.api2kotlin.getProveedores().enqueue(object : Callback<List<Proveedor>> {
+        RetrofitInstance.getApi(this).getProveedores().enqueue(object : Callback<List<Proveedor>> {
             override fun onResponse(call: Call<List<Proveedor>>, response: Response<List<Proveedor>>) {
                 if (response.isSuccessful && response.body() != null) {
                     adapter.updateList(response.body()!!)
@@ -94,10 +97,12 @@ class ProveedoresActivity : AppCompatActivity() {
     fun crearProveedor(v: View) {
         val nombre = findViewById<EditText>(R.id.nombre).text.toString()
         val direccion = findViewById<EditText>(R.id.direccion).text.toString()
-        val contacto = findViewById<EditText>(R.id.contacto).text.toString()
-        val estadoSeleccionado = if (findViewById<AutoCompleteTextView>(R.id.spinnerEstado).text.toString() == "Activo") "1" else "0"
+        val telefono = findViewById<EditText>(R.id.telefono).text.toString()
+        val correo = findViewById<EditText>(R.id.correo).text.toString()
+        val spinnerEstado = findViewById<Spinner>(R.id.spinnerEstado)
+        val estadoSeleccionado = if (spinnerEstado.selectedItem.toString() == "Activo") "1" else "0"
 
-        if (nombre.isEmpty() || contacto.isEmpty()) {
+        if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
             Toast.makeText(this, "Completa los campos obligatorios", Toast.LENGTH_SHORT).show()
             return
         }
@@ -105,12 +110,15 @@ class ProveedoresActivity : AppCompatActivity() {
         if (proveedorEditando != null) {
             // PUT: Actualizar
             val proveedorActualizado = Proveedor(
-                proveedorEditando!!.id, nombre,
+                proveedorEditando!!.id,
+                nombre,
                 if (direccion.isEmpty()) null else direccion,
-                contacto, estadoSeleccionado
+                telefono,
+                correo,
+                estadoSeleccionado
             )
 
-            RetrofitInstance.api2kotlin.actualizarProveedor(proveedorEditando!!.id, proveedorActualizado)
+            RetrofitInstance.getApi(this).actualizarProveedor(proveedorEditando!!.id, proveedorActualizado)
                 .enqueue(object : Callback<Proveedor> {
                     override fun onResponse(call: Call<Proveedor>, response: Response<Proveedor>) {
                         if (response.isSuccessful) {
@@ -134,12 +142,15 @@ class ProveedoresActivity : AppCompatActivity() {
         } else {
             // POST: Crear
             val nuevoProveedor = Proveedor(
-                0, nombre,
+                0, // ID 0 para nuevo proveedor
+                nombre,
                 if (direccion.isEmpty()) null else direccion,
-                contacto, estadoSeleccionado
+                telefono,
+                correo,
+                estadoSeleccionado
             )
 
-            RetrofitInstance.api2kotlin.crearProveedor(nuevoProveedor).enqueue(object : Callback<Proveedor> {
+            RetrofitInstance.getApi(this).crearProveedor(nuevoProveedor).enqueue(object : Callback<Proveedor> {
                 override fun onResponse(call: Call<Proveedor>, response: Response<Proveedor>) {
                     if (response.isSuccessful && response.body() != null) {
                         Toast.makeText(this@ProveedoresActivity, "Proveedor registrado correctamente", Toast.LENGTH_SHORT).show()
@@ -167,7 +178,7 @@ class ProveedoresActivity : AppCompatActivity() {
             .setTitle("Eliminar Proveedor")
             .setMessage("¿Eliminar a ${proveedor.nombre}?")
             .setPositiveButton("Eliminar") { _, _ ->
-                RetrofitInstance.api2kotlin.eliminarProveedor(proveedor.id)
+                RetrofitInstance.getApi(this).eliminarProveedor(proveedor.id)
                     .enqueue(object : Callback<Void> {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             if (response.isSuccessful) {
@@ -194,9 +205,10 @@ class ProveedoresActivity : AppCompatActivity() {
         proveedorEditando = proveedor
         findViewById<EditText>(R.id.nombre).setText(proveedor.nombre)
         findViewById<EditText>(R.id.direccion).setText(proveedor.direccion ?: "")
-        findViewById<EditText>(R.id.contacto).setText(proveedor.contacto ?: "")
-        findViewById<AutoCompleteTextView>(R.id.spinnerEstado)
-            .setText(if (proveedor.estado == "1") "Activo" else "Inactivo", false)
+        findViewById<EditText>(R.id.telefono).setText(proveedor.telefono)
+        findViewById<EditText>(R.id.correo).setText(proveedor.correo)
+        val spinnerEstado = findViewById<Spinner>(R.id.spinnerEstado)
+        spinnerEstado.setSelection(if (proveedor.estado == "1") 0 else 1) // 0 para "Activo", 1 para "Inactivo"
         findViewById<CardView>(R.id.cardFormulario).visibility = View.VISIBLE
         findViewById<MaterialButton>(R.id.btnToggleForm).text = "- Cancelar Edición"
         findViewById<MaterialButton>(R.id.btnGuardar).text = "Actualizar Proveedor"
@@ -206,8 +218,10 @@ class ProveedoresActivity : AppCompatActivity() {
     private fun limpiarFormulario() {
         findViewById<EditText>(R.id.nombre).setText("")
         findViewById<EditText>(R.id.direccion).setText("")
-        findViewById<EditText>(R.id.contacto).setText("")
-        findViewById<AutoCompleteTextView>(R.id.spinnerEstado).setText("", false)
+        findViewById<EditText>(R.id.telefono).setText("")
+        findViewById<EditText>(R.id.correo).setText("")
+        val spinnerEstado = findViewById<Spinner>(R.id.spinnerEstado)
+        spinnerEstado.setSelection(0) // Seleccionar "Activo" por defecto
         findViewById<MaterialButton>(R.id.btnGuardar).text = "Registrar proveedor"
         proveedorEditando = null
     }

@@ -1,155 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:app="http://schemas.android.com/apk/res-auto"
-			  android:id="@+id/main"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:orientation="vertical"
-			  android:background="#1a1a1a">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:app="http://schemas.android.com/apk/res-auto"
+			xmlns:tools="http://schemas.android.com/tools"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@drawable/gradient_background"
+			android:fillViewport="true">
 
 
-	<TextView
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/rootLayout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Gestion Usuarios"
-			android:textAlignment="center"
-			android:textColor="#FFFFFF"
-			android:textSize="18sp"
-			android:layout_marginTop="8dp" />
+			android:padding="24dp"
+			tools:context=".UsuariosActivity">
 
-	<!-- Botón para mostrar/ocultar formulario -->
-	<com.google.android.material.button.MaterialButton
-			android:id="@+id/btnToggleForm"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="+ Agregar Nuevo Usuario"
-			android:textColor="#FFFFFF"
-			android:backgroundTint="#6200EE"
-			android:layout_margin="16dp"
-			app:cornerRadius="12dp" />
-
-	<!-- Formulario colapsable -->
-	<androidx.cardview.widget.CardView
-			android:id="@+id/cardFormulario"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
-			android:visibility="gone"
-			app:cardBackgroundColor="#2a2a2a"
-			app:cardCornerRadius="12dp"
-			app:cardElevation="4dp">
-
-		<LinearLayout
-				android:layout_width="match_parent"
+		<!-- Header -->
+		<TextView
+				android:id="@+id/titleTextView"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:padding="16dp">
+				android:text="Gestión de Usuarios"
+				android:textSize="28sp"
+				android:textColor="#FFFFFF"
+				android:textStyle="bold"
+				android:shadowColor="#000000"
+				android:shadowDx="2"
+				android:shadowDy="2"
+				android:shadowRadius="8"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"/>
 
-			<com.google.android.material.textfield.TextInputLayout
+		<!-- Botón para mostrar/ocultar formulario -->
+		<com.google.android.material.button.MaterialButton
+				android:id="@+id/btnToggleForm"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="+ Agregar Nuevo Usuario"
+				android:layout_marginTop="16dp"
+				app:layout_constraintTop_toBottomOf="@id/titleTextView"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"/>
+
+		<!-- Card del formulario -->
+		<com.google.android.material.card.MaterialCardView
+				android:id="@+id/cardFormulario"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:visibility="gone"
+				app:cardCornerRadius="20dp"
+				app:cardElevation="12dp"
+				app:strokeWidth="1dp"
+				app:strokeColor="#4DFFFFFF"
+				app:cardBackgroundColor="#1AFFFFFF"
+				app:layout_constraintTop_toBottomOf="@id/btnToggleForm"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent">
+
+			<LinearLayout
+					android:id="@+id/btnRegresar"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:hint="Rol"
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-					app:boxStrokeColor="#6200EE"
-					app:hintTextColor="#FFD700">
+					android:orientation="horizontal"
+					android:padding="16dp"
+					android:gravity="center_vertical"
+					android:background="?attr/selectableItemBackground"
+					android:clickable="true"
+					android:focusable="true">
 
-				<AutoCompleteTextView
-						android:id="@+id/spinnerRol"
+				<ImageView
+						android:layout_width="24dp"
+						android:layout_height="24dp"
+						android:src="@android:drawable/ic_menu_revert"
+						android:tint="@android:color/white"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Volver"
+						android:textSize="16sp"
+						android:textColor="@android:color/white"
+						android:layout_marginStart="8dp"/>
+			</LinearLayout>
+
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="24dp"
+					android:background="@drawable/card_glass_background">
+
+				<!-- Nombre -->
+				<com.google.android.material.textfield.TextInputLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
-						android:inputType="none"
-						android:textColor="#FFFFFF" />
-			</com.google.android.material.textfield.TextInputLayout>
+						android:hint="Nombre completo"
+						android:textColorHint="#FFFFFF"
+						app:boxStrokeColor="@android:color/transparent"
+						app:hintTextColor="@android:color/white"
+						app:boxBackgroundColor="#6B5B95"
+						style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
-			<com.google.android.material.textfield.TextInputLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="Estado"
-					android:layout_marginTop="8dp"
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-					app:boxStrokeColor="#6200EE"
-					app:hintTextColor="#FFD700">
+					<com.google.android.material.textfield.TextInputEditText
+							android:id="@+id/nombre"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:inputType="textPersonName"
+							android:textColor="#FFFFFF"/>
+				</com.google.android.material.textfield.TextInputLayout>
 
-				<AutoCompleteTextView
-						android:id="@+id/spinnerEstado"
+				<!-- Correo -->
+				<com.google.android.material.textfield.TextInputLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
-						android:inputType="none"
-						android:textColor="#FFFFFF" />
-			</com.google.android.material.textfield.TextInputLayout>
+						android:hint="Correo electrónico"
+						android:textColorHint="#FFFFFF"
+						android:layout_marginTop="16dp"
+						app:boxStrokeColor="@android:color/transparent"
+						app:hintTextColor="@android:color/white"
+						app:boxBackgroundColor="#6B5B95"
+						style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
-			<EditText
-					android:id="@+id/nombre"
-					android:layout_width="match_parent"
-					android:layout_height="50dp"
-					android:hint="Nombre completo"
-					android:textColorHint="#888888"
-					android:textColor="#FFFFFF"
-					android:padding="12dp"
-					android:layout_marginTop="8dp" />
+					<com.google.android.material.textfield.TextInputEditText
+							android:id="@+id/correo"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:inputType="textEmailAddress"
+							android:textColor="#FFFFFF"/>
+				</com.google.android.material.textfield.TextInputLayout>
 
-			<EditText
-					android:id="@+id/correo"
-					android:layout_width="match_parent"
-					android:layout_height="50dp"
-					android:hint="Correo electrónico"
-					android:inputType="textEmailAddress"
-					android:textColorHint="#888888"
-					android:textColor="#FFFFFF"
-					android:padding="12dp"
-					android:layout_marginTop="8dp" />
+				<!-- Contraseña -->
+				<com.google.android.material.textfield.TextInputLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:hint="Contraseña"
+						android:textColorHint="#FFFFFF"
+						android:layout_marginTop="16dp"
+						app:boxStrokeColor="@android:color/transparent"
+						app:hintTextColor="@android:color/white"
+						app:boxBackgroundColor="#6B5B95"
+						app:endIconMode="password_toggle"
+						app:endIconTint="#FFFFFF"
+						style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
-			<EditText
-					android:id="@+id/contrasena"
-					android:layout_width="match_parent"
-					android:layout_height="50dp"
-					android:hint="Contraseña"
-					android:inputType="textPassword"
-					android:textColorHint="#888888"
-					android:textColor="#FFFFFF"
-					android:padding="12dp"
-					android:layout_marginTop="8dp" />
+					<com.google.android.material.textfield.TextInputEditText
+							android:id="@+id/contrasena"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:inputType="textPassword"
+							android:textColor="#FFFFFF"/>
+				</com.google.android.material.textfield.TextInputLayout>
 
-			<EditText
-					android:id="@+id/telefono"
-					android:layout_width="match_parent"
-					android:layout_height="50dp"
-					android:hint="Teléfono (opcional)"
-					android:inputType="phone"
-					android:textColorHint="#888888"
-					android:textColor="#FFFFFF"
-					android:padding="12dp"
-					android:layout_marginTop="8dp" />
+				<!-- Rol -->
+				<com.google.android.material.textfield.TextInputLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:hint="Rol"
+						android:textColorHint="#FFFFFF"
+						android:layout_marginTop="16dp"
+						app:boxStrokeColor="@android:color/transparent"
+						app:hintTextColor="@android:color/white"
+						app:boxBackgroundColor="#6B5B95"
+						style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
-			<EditText
-					android:id="@+id/fechaNacimiento"
-					android:layout_width="match_parent"
-					android:layout_height="50dp"
-					android:hint="Fecha de nacimiento (opcional, YYYY-MM-DD)"
-					android:textColorHint="#888888"
-					android:textColor="#FFFFFF"
-					android:padding="12dp"
-					android:layout_marginTop="8dp" />
+					<Spinner
+							android:id="@+id/spinnerRol"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:background="@drawable/spinner_background"
+							android:popupBackground="@drawable/spinner_dropdown_background"
+							android:spinnerMode="dropdown"
+							android:textColor="#FFFFFF"/>
+				</com.google.android.material.textfield.TextInputLayout>
 
-			<com.google.android.material.button.MaterialButton
-					android:id="@+id/btnGuardar"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:text="Registrar usuario"
-					android:textColor="#FFFFFF"
-					android:backgroundTint="#6200EE"
-					android:layout_marginTop="16dp"
-					app:cornerRadius="12dp"
-					android:onClick="crearpersona" />
-		</LinearLayout>
-	</androidx.cardview.widget.CardView>
+				<!-- Estado -->
+				<com.google.android.material.textfield.TextInputLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:hint="Estado"
+						android:textColorHint="#FFFFFF"
+						android:layout_marginTop="16dp"
+						app:boxStrokeColor="@android:color/transparent"
+						app:hintTextColor="@android:color/white"
+						app:boxBackgroundColor="#6B5B95"
+						style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
 
-	<!-- RecyclerView para lista -->
-	<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/RecyPersonas"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:layout_margin="8dp" />
+					<Spinner
+							android:id="@+id/spinnerEstado"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:background="@drawable/spinner_background"
+							android:popupBackground="@drawable/spinner_dropdown_background"
+							android:spinnerMode="dropdown"
+							android:textColor="#FFFFFF"/>
+				</com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+				<!-- Botón Guardar -->
+				<Button
+						android:id="@+id/btnGuardar"
+						android:layout_width="match_parent"
+						android:layout_height="56dp"
+						android:text="REGISTRAR USUARIO"
+						android:textSize="16sp"
+						android:textStyle="bold"
+						android:layout_marginTop="24dp"
+						android:background="@drawable/button_gradient"
+						android:textColor="@android:color/white"
+						android:onClick="crearUsuario"/>
+
+				<!-- ProgressBar -->
+				<ProgressBar
+						android:id="@+id/progressBar"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center"
+						android:layout_marginTop="16dp"
+						android:indeterminateTint="#CCCCCC"
+						android:visibility="gone"/>
+
+			</LinearLayout>
+		</com.google.android.material.card.MaterialCardView>
+
+		<!-- Recycler View -->
+		<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/RecyUsuarios"
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_marginTop="16dp"
+				app:layout_constraintTop_toBottomOf="@id/cardFormulario"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

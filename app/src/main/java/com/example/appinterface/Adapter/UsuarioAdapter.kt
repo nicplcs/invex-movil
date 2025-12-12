@@ -9,15 +9,15 @@ import com.example.appinterface.Api.Usuario
 import com.example.appinterface.R
 
 class UsuarioAdapter(private val usuarios: MutableList<Usuario>) :
-    RecyclerView.Adapter<UsuarioAdapter.PersonaViewHolder>() {
+    RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonaViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsuarioViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_usuario, parent, false)
-        return PersonaViewHolder(view)
+        return UsuarioViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PersonaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UsuarioViewHolder, position: Int) {
         holder.bind(usuarios[position])
     }
 
@@ -36,7 +36,7 @@ class UsuarioAdapter(private val usuarios: MutableList<Usuario>) :
         notifyItemInserted(usuarios.size - 1)
     }
 
-    class PersonaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class UsuarioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvNombre: TextView = itemView.findViewById(R.id.tvNombre)
         private val tvCorreo: TextView = itemView.findViewById(R.id.tvCorreo)
         private val tvRol: TextView = itemView.findViewById(R.id.tvRol)
