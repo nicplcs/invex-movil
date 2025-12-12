@@ -2,6 +2,8 @@ package com.example.appinterface
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +25,12 @@ class usuariosActivity : AppCompatActivity() {
     private var usuarioEditando: Usuario? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: UsuarioAdapter
+    private lateinit var btnRegresar: LinearLayout
+    private lateinit var etBuscar: EditText
+    private lateinit var btnLimpiarBusqueda: Button
+
+    private var listaUsuariosOriginal = mutableListOf<Usuario>()
+    private var listaUsuariosFiltrada = mutableListOf<Usuario>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +39,7 @@ class usuariosActivity : AppCompatActivity() {
 
         // Configurar el spinner de rol
         val spinnerRol = findViewById<Spinner>(R.id.spinnerRol)
-        val roles = arrayOf("Administrador",  "Empleado") // Ajusta según tus roles
+        val roles = arrayOf("Administrador", "Empleado")
         val adapterRol = ArrayAdapter(this, android.R.layout.simple_spinner_item, roles)
         adapterRol.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerRol.adapter = adapterRol
@@ -45,6 +53,13 @@ class usuariosActivity : AppCompatActivity() {
 
         val cardFormulario = findViewById<CardView>(R.id.cardFormulario)
         val btnToggleForm = findViewById<MaterialButton>(R.id.btnToggleForm)
+
+        // Referencias a elementos de búsqueda
+        btnRegresar = findViewById(R.id.btnRegresar)
+        etBuscar = findViewById(R.id.etBuscar)
+        btnLimpiarBusqueda = findViewById(R.id.btnLimpiarBusqueda)
+
+        setupListeners()
 
         btnToggleForm.setOnClickListener {
             if (cardFormulario.visibility == View.GONE) {
@@ -67,7 +82,7 @@ class usuariosActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val usuario = adapter.getUsuario(position)
+                val usuario = listaUsuariosFiltrada[position]
 
                 if (direction == ItemTouchHelper.RIGHT) {
                     cargarUsuarioEnFormulario(usuario)
@@ -82,12 +97,62 @@ class usuariosActivity : AppCompatActivity() {
         cargarUsuarios()
     }
 
+    private fun setupListeners() {
+        btnRegresar.setOnClickListener {
+            finish()
+        }
+
+        etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                btnLimpiarBusqueda.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                filtrarUsuarios()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        btnLimpiarBusqueda.setOnClickListener {
+            etBuscar.text.clear()
+        }
+    }
+
+    private fun filtrarUsuarios() {
+        if (listaUsuariosOriginal.isEmpty()) return
+
+        val textoBusqueda = etBuscar.text.toString().lowercase().trim()
+
+        listaUsuariosFiltrada = if (textoBusqueda.isEmpty()) {
+            listaUsuariosOriginal.toMutableList()
+        } else {
+            listaUsuariosOriginal.filter { usuario ->
+                (usuario.nombre?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (usuario.correo?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (usuario.rol?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (usuario.id_usuario?.toString()?.contains(textoBusqueda) ?: false)
+            }.toMutableList()
+        }
+
+        actualizarRecyclerView()
+    }
+
+    private fun actualizarRecyclerView() {
+        adapter.updateList(listaUsuariosFiltrada)
+
+        if (listaUsuariosFiltrada.isEmpty()) {
+            Toast.makeText(this, "No se encontraron usuarios con esos filtros", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     // GET: Cargar usuarios
     private fun cargarUsuarios() {
         RetrofitInstance.getApi(this).getUsuarios().enqueue(object : Callback<List<Usuario>> {
             override fun onResponse(call: Call<List<Usuario>>, response: Response<List<Usuario>>) {
                 if (response.isSuccessful && response.body() != null) {
-                    adapter.updateList(response.body()!!)
+                    listaUsuariosOriginal = response.body()!!.toMutableList()
+                    listaUsuariosFiltrada = listaUsuariosOriginal.toMutableList()
+                    adapter.updateList(listaUsuariosFiltrada)
                     Toast.makeText(this@usuariosActivity, "Lista actualizada", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@usuariosActivity, "Error al cargar: ${response.code()}", Toast.LENGTH_SHORT).show()
@@ -220,7 +285,7 @@ class usuariosActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.contrasena).setText(usuario.contrasena)
 
         val spinnerRol = findViewById<Spinner>(R.id.spinnerRol)
-        val roles = arrayOf("Administrador",  "Empleado")
+        val roles = arrayOf("Administrador", "Empleado")
         val posicionRol = roles.indexOf(usuario.rol)
         if (posicionRol >= 0) spinnerRol.setSelection(posicionRol)
 

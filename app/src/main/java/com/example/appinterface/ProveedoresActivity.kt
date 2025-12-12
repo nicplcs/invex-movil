@@ -2,6 +2,8 @@ package com.example.appinterface
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +25,12 @@ class ProveedoresActivity : AppCompatActivity() {
     private var proveedorEditando: Proveedor? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ProveedorAdapter
+    private lateinit var btnRegresar: LinearLayout
+    private lateinit var etBuscar: EditText
+    private lateinit var btnLimpiarBusqueda: Button
+
+    private var listaProveedoresOriginal = mutableListOf<Proveedor>()
+    private var listaProveedoresFiltrada = mutableListOf<Proveedor>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +46,13 @@ class ProveedoresActivity : AppCompatActivity() {
 
         val cardFormulario = findViewById<CardView>(R.id.cardFormulario)
         val btnToggleForm = findViewById<MaterialButton>(R.id.btnToggleForm)
+
+        // Referencias a elementos de búsqueda
+        btnRegresar = findViewById(R.id.btnRegresar)
+        etBuscar = findViewById(R.id.etBuscar)
+        btnLimpiarBusqueda = findViewById(R.id.btnLimpiarBusqueda)
+
+        setupListeners()
 
         btnToggleForm.setOnClickListener {
             if (cardFormulario.visibility == View.GONE) {
@@ -60,7 +75,7 @@ class ProveedoresActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val proveedor = adapter.getProveedor(position)
+                val proveedor = listaProveedoresFiltrada[position]
 
                 if (direction == ItemTouchHelper.RIGHT) {
                     cargarProveedorEnFormulario(proveedor)
@@ -75,12 +90,63 @@ class ProveedoresActivity : AppCompatActivity() {
         cargarProveedores()
     }
 
+    private fun setupListeners() {
+        btnRegresar.setOnClickListener {
+            finish()
+        }
+
+        etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                btnLimpiarBusqueda.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                filtrarProveedores()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        btnLimpiarBusqueda.setOnClickListener {
+            etBuscar.text.clear()
+        }
+    }
+
+    private fun filtrarProveedores() {
+        if (listaProveedoresOriginal.isEmpty()) return
+
+        val textoBusqueda = etBuscar.text.toString().lowercase().trim()
+
+        listaProveedoresFiltrada = if (textoBusqueda.isEmpty()) {
+            listaProveedoresOriginal.toMutableList()
+        } else {
+            listaProveedoresOriginal.filter { proveedor ->
+                (proveedor.nombre?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (proveedor.correo?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (proveedor.telefono?.contains(textoBusqueda) ?: false) ||
+                        (proveedor.direccion?.lowercase()?.contains(textoBusqueda) ?: false) ||
+                        (proveedor.id?.toString()?.contains(textoBusqueda) ?: false)
+            }.toMutableList()
+        }
+
+        actualizarRecyclerView()
+    }
+
+    private fun actualizarRecyclerView() {
+        adapter.updateList(listaProveedoresFiltrada)
+
+        if (listaProveedoresFiltrada.isEmpty()) {
+            Toast.makeText(this, "No se encontraron proveedores con esos filtros", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     // GET: Cargar proveedores
     private fun cargarProveedores() {
         RetrofitInstance.getApi(this).getProveedores().enqueue(object : Callback<List<Proveedor>> {
             override fun onResponse(call: Call<List<Proveedor>>, response: Response<List<Proveedor>>) {
                 if (response.isSuccessful && response.body() != null) {
-                    adapter.updateList(response.body()!!)
+                    listaProveedoresOriginal = response.body()!!.toMutableList()
+                    listaProveedoresFiltrada = listaProveedoresOriginal.toMutableList()
+                    adapter.updateList(listaProveedoresFiltrada)
                     Toast.makeText(this@ProveedoresActivity, "Lista actualizada", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this@ProveedoresActivity, "Error al cargar: ${response.code()}", Toast.LENGTH_SHORT).show()
@@ -208,7 +274,7 @@ class ProveedoresActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.telefono).setText(proveedor.telefono)
         findViewById<EditText>(R.id.correo).setText(proveedor.correo)
         val spinnerEstado = findViewById<Spinner>(R.id.spinnerEstado)
-        spinnerEstado.setSelection(if (proveedor.estado == "1") 0 else 1) // 0 para "Activo", 1 para "Inactivo"
+        spinnerEstado.setSelection(if (proveedor.estado == "1") 0 else 1)
         findViewById<CardView>(R.id.cardFormulario).visibility = View.VISIBLE
         findViewById<MaterialButton>(R.id.btnToggleForm).text = "- Cancelar Edición"
         findViewById<MaterialButton>(R.id.btnGuardar).text = "Actualizar Proveedor"
@@ -221,7 +287,7 @@ class ProveedoresActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.telefono).setText("")
         findViewById<EditText>(R.id.correo).setText("")
         val spinnerEstado = findViewById<Spinner>(R.id.spinnerEstado)
-        spinnerEstado.setSelection(0) // Seleccionar "Activo" por defecto
+        spinnerEstado.setSelection(0)
         findViewById<MaterialButton>(R.id.btnGuardar).text = "Registrar proveedor"
         proveedorEditando = null
     }

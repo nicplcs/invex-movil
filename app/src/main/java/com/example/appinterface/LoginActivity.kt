@@ -6,6 +6,7 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.appinterface.Api.LoginRequest
@@ -23,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etContrasena: TextInputEditText
     private lateinit var btnLogin: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var tvIrRegistro: TextView
     private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +45,19 @@ class LoginActivity : AppCompatActivity() {
         etContrasena = findViewById(R.id.etContrasena)
         btnLogin = findViewById(R.id.btnLogin)
         progressBar = findViewById(R.id.progressBar)
+        tvIrRegistro = findViewById(R.id.tvIrRegistro)
 
-        // 4. Configurar el click del botón
+        // 4. Configurar el click del botón de login
         btnLogin.setOnClickListener {
             if (validarCampos()) {
                 realizarLogin()
             }
+        }
+
+        // 5. Configurar el click del TextView para ir al registro
+        tvIrRegistro.setOnClickListener {
+            val intent = Intent(this, RegistroActivity::class.java)
+            startActivity(intent)
         }
     }
 
