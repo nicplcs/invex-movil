@@ -39,13 +39,15 @@ class ProveedorAdapter(private val proveedores: MutableList<Proveedor>) :
     class ProveedorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvNombre: TextView = itemView.findViewById(R.id.tvNombre)
         private val tvDireccion: TextView = itemView.findViewById(R.id.tvDireccion)
-        private val tvContacto: TextView = itemView.findViewById(R.id.tvContacto)
+        private val tvTelefono: TextView = itemView.findViewById(R.id.tvTelefono)
+        private val tvCorreo: TextView = itemView.findViewById(R.id.tvCorreo)
         private val tvEstado: TextView = itemView.findViewById(R.id.tvEstado)
 
         fun bind(proveedor: Proveedor) {
             tvNombre.text = proveedor.nombre
             tvDireccion.text = proveedor.direccion ?: "Sin dirección"
-            tvContacto.text = proveedor.contacto ?: "Sin contacto"
+            tvTelefono.text = proveedor.telefono
+            tvCorreo.text = proveedor.correo
             tvEstado.text = if (proveedor.estado == "1") "Activo" else "Inactivo"
 
             val card = itemView.findViewById<View>(R.id.cardView)
