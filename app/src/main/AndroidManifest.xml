@@ -69,6 +69,12 @@
 				android:name=".Modulos_usuariosActivity"
 				android:exported="false" />
 
+		<!-- REGISTROOO -->
+
+		<activity
+				android:name=".RegistroActivity"
+				android:exported="false" />
+
 	</application>
 
 </manifest>
