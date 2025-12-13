@@ -55,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 5. Configurar el click del TextView para ir al registro
+        val tvIrRegistro: TextView = findViewById(R.id.tvIrRegistro)
         tvIrRegistro.setOnClickListener {
             val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
