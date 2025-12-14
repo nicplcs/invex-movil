@@ -1,1 +1,15 @@
 /build
+# Gradle
+.gradle/
+**/build/
+!src/**/build/
+*.lock
+*.bin
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Local files
+local.properties
