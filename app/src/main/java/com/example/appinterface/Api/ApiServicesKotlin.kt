@@ -88,5 +88,8 @@ interface ApiServicesKotlin {
     @POST("auth/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
+    // REGISTRAR
+
+
 
 }

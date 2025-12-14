@@ -4,6 +4,7 @@ data class Proveedor(
     val id: Int,
     val nombre: String,
     val direccion: String?,
-    val contacto: String?,
+    val telefono: String?,
+    val correo: String?,
     val estado: String
 )

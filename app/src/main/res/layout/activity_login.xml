@@ -5,62 +5,15 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1a1a1a"
+        android:background="@drawable/gradient_background"
         android:fitsSystemWindows="true">
 
-    <!-- Logo -->
-    <ImageView
-            android:id="@+id/logoImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/logo"
-            android:layout_marginTop="80dp"
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Título -->
-    <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sistema de Inventario"
-            android:textSize="28sp"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/logoImageView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Subtítulo -->
-    <TextView
-            android:id="@+id/subtitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Iniciar Sesión"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:alpha="0.8"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Card del formulario -->
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/loginCard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginTop="40dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="2dp"
-            app:strokeColor="#4DFFFFFF"
-            app:cardBackgroundColor="#33FFFFFF"
-            app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
+            app:layout_constraintBottom_toTopOf="@id/footerText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -68,85 +21,172 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:padding="24dp">
 
-            <!-- Campo de Correo -->
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/emailInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Correo electrónico"
-                    android:textColorHint="#FFFFFF"
-                    app:boxStrokeColor="@android:color/white"
-                    app:hintTextColor="@android:color/white"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <!-- Logo -->
+            <ImageView
+                    android:id="@+id/logoImageView"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/logo"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="Logo INVEX"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCorreo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Campo de Contraseña -->
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/passwordInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Contraseña"
-                    android:textColorHint="#FFFFFF"
-                    android:layout_marginTop="16dp"
-                    app:boxStrokeColor="@android:color/white"
-                    app:hintTextColor="@android:color/white"
-                    app:endIconMode="password_toggle"
-                    app:endIconTint="@android:color/white"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etContrasena"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Botón de Login -->
-            <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="INICIAR SESIÓN"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="24dp"
-                    android:backgroundTint="#0E1D99"
-                    android:textColor="@android:color/white"/>
-
-            <!-- ProgressBar -->
-            <ProgressBar
-                    android:id="@+id/progressBar"
+            <!-- Título -->
+            <TextView
+                    android:id="@+id/titleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:indeterminateTint="@android:color/white"
-                    android:visibility="gone"/>
+                    android:text="Sistema de Inventario"
+                    android:textSize="28sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:shadowColor="#000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="8"
+                    android:layout_marginTop="24dp"/>
+
+            <!-- Subtítulo -->
+            <TextView
+                    android:id="@+id/subtitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iniciar Sesión"
+                    android:textSize="16sp"
+                    android:textColor="#CCFFFFFF"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="40dp"/>
+
+            <!-- Card del formulario -->
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/loginCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="12dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#4DFFFFFF"
+                    app:cardBackgroundColor="#1AFFFFFF">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp"
+                        android:background="@drawable/card_glass_background">
+
+                    <!-- Campo de Correo -->
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/emailInputLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Correo electrónico"
+                            android:textColorHint="#FFFFFF"
+                            app:boxStrokeColor="#FFFFFF"
+                            app:hintTextColor="#FFFFFF"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCorreo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Campo de Contraseña -->
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/passwordInputLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Contraseña"
+                            android:textColorHint="#FFFFFF"
+                            android:layout_marginTop="16dp"
+                            app:boxStrokeColor="#FFFFFF"
+                            app:hintTextColor="#FFFFFF"
+                            app:endIconMode="password_toggle"
+                            app:endIconTint="#FFFFFF"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etContrasena"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Botón de Login -->
+                    <Button
+                            android:id="@+id/btnLogin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="INICIAR SESIÓN"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textAllCaps="false"
+                            android:textColor="#FFFFFF"
+                            android:background="@drawable/button_delete_gradient"
+                            android:paddingVertical="16dp"
+                            android:layout_marginTop="24dp"
+                            android:elevation="8dp"/>
+
+                    <!-- ProgressBar -->
+                    <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="16dp"
+                            android:indeterminateTint="#FFFFFF"
+                            android:visibility="gone"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Texto para ir al Registro -->
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¿No tienes cuenta? "
+                        android:textSize="14sp"
+                        android:textColor="#CCFFFFFF"/>
+
+                <TextView
+                        android:id="@+id/tvIrRegistro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Regístrate"
+                        android:textSize="14sp"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"/>
+            </LinearLayout>
 
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
 
     <!-- Footer -->
     <TextView
             android:id="@+id/footerText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="© 2025 Punto Éxito. Todos los derechos reservados."
+            android:text="© 2025 Invex. Todos los derechos reservados."
             android:textSize="12sp"
-            android:textColor="@android:color/white"
-            android:alpha="0.7"
+            android:textColor="#CCFFFFFF"
             android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
