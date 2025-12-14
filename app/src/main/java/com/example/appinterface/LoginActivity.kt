@@ -55,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 5. Configurar el click del TextView para ir al registro
-        val tvIrRegistro: TextView = findViewById(R.id.tvIrRegistro)
         tvIrRegistro.setOnClickListener {
             val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
@@ -127,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        // Navegar a MainActivity
+                        // Navegar según el rol
                         irAMainActivity()
                     }
                 } else {
@@ -155,7 +154,28 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun irAMainActivity() {
-        val intent = Intent(this, MainActivityy::class.java)
+        val rol = sessionManager.getRol()
+
+        val intent = when (rol) {
+            "admin", "administrador" -> {
+                // Si es admin, va a MainActivity con todos los módulos
+                Intent(this, MainActivityy::class.java)
+            }
+            "usuario", "empleado" -> {
+                // Si es empleado/usuario, va a EmpleadoActivity (módulos limitados)
+                Intent(this, EmpleadoActivity::class.java)
+            }
+            else -> {
+                // Si el rol es desconocido, por defecto va a empleado
+                Toast.makeText(
+                    this,
+                    "Rol desconocido, accediendo como empleado",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Intent(this, EmpleadoActivity::class.java)
+            }
+        }
+
         startActivity(intent)
         finish() // Cierra LoginActivity para que no pueda volver con el botón atrás
     }

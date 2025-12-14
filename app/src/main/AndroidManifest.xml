@@ -75,6 +75,18 @@
 				android:name=".RegistroActivity"
 				android:exported="false" />
 
+		<!-- EMPLEADO -->
+
+		<activity
+				android:name=".EmpleadoActivity"
+				android:exported="false"/>
+
+		<!-- Consultar Proveedores - Empleado -->
+		<activity
+				android:name=".EconsultarProveedoresActivity"
+				android:exported="false"/>
+
+
 	</application>
 
 </manifest>
