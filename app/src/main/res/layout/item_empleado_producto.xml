@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardEmpleadoProducto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="#1AFFFFFF"
+        app:cardElevation="8dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/card_glass_background">
+
+        <!-- Encabezado con ID y Estado -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+            <TextView
+                    android:id="@+id/tvEmpleadoIdProducto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ID: 1"
+                    android:textColor="#B3FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp" />
+
+            <TextView
+                    android:id="@+id/tvEmpleadoEstado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Activo"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp" />
+        </LinearLayout>
+
+        <!-- Nombre del producto -->
+        <TextView
+                android:id="@+id/tvEmpleadoNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Producto"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp" />
+
+        <!-- Precio -->
+        <TextView
+                android:id="@+id/tvEmpleadoPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textColor="#4CAF50"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="12dp" />
+
+        <!-- Divisor simple -->
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginBottom="12dp" />
+
+        <!-- Grid de información -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+            <!-- Stock Actual -->
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stock Actual"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="10sp"
+                        android:layout_marginBottom="4dp" />
+
+                <TextView
+                        android:id="@+id/tvEmpleadoStockActual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Stock Mínimo -->
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mínimo"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="10sp"
+                        android:layout_marginBottom="4dp" />
+
+                <TextView
+                        android:id="@+id/tvEmpleadoStockMinimo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#FFC107"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- Stock Máximo -->
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Máximo"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="10sp"
+                        android:layout_marginBottom="4dp" />
+
+                <TextView
+                        android:id="@+id/tvEmpleadoStockMaximo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#2196F3"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Divisor simple -->
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp" />
+
+        <!-- Categoría y Proveedor -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:id="@+id/tvEmpleadoCategoria"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cat: 0"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="12sp" />
+
+            <TextView
+                    android:id="@+id/tvEmpleadoProveedor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Prov: 0"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="12sp"
+                    android:gravity="end" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

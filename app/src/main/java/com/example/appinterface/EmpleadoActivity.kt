@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
 import android.widget.Toast
 import android.widget.Button
+import com.example.appinterface.EregistrarSalidaActivity
 import com.example.appinterface.utils.SessionManager
 
 class EmpleadoActivity : AppCompatActivity() {
