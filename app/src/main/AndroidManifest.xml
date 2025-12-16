@@ -86,6 +86,14 @@
 				android:name=".EconsultarProveedoresActivity"
 				android:exported="false"/>
 
+		<!--Movimientos -->
+		<activity android:name=".EconsultarMovimientosActivity"
+				  android:exported="false"/>
+
+		<!--Devolciones-->
+		<activity android:name=".EregistrarDevolucionActivity"
+				  android:exported="false"/>
+
 
 	</application>
 
