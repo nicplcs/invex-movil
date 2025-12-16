@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@drawable/gradient_background"
+              tools:context=".EconsultarProductosActivity">
+
+    <!-- Header con botón regresar -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="#1A000000">
+
+        <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnRegresar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="#6B4FBB"
+                app:cardElevation="6dp"
+                android:clickable="true"
+                android:focusable="true">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp">
+
+                <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_arrow_back"
+                        android:tint="#FFFFFF"
+                        android:layout_marginEnd="8dp" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Volver"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- Contenido principal -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+        <!-- Título -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Consultar Productos"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Visualiza el inventario disponible"
+                android:textColor="#CCFFFFFF"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
+
+        <!-- Barra de búsqueda -->
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="#1AFFFFFF"
+                app:cardElevation="8dp"
+                android:layout_marginBottom="16dp">
+
+            <SearchView
+                    android:id="@+id/searchViewProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:queryHint="Buscar producto por nombre o ID..."
+                    android:iconifiedByDefault="false"
+                    android:background="@android:color/transparent" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Información adicional -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="12dp"
+                android:background="@drawable/card_glass_background"
+                android:layout_marginBottom="16dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ℹ️"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp" />
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Los productos con stock bajo aparecerán resaltados en rojo"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerEmpleadoProductos"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

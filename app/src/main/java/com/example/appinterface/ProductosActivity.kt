@@ -36,9 +36,17 @@ class ProductosActivity : AppCompatActivity() {
         adapter = ProductosAdapter(mutableListOf())
         recyclerView.adapter = adapter
 
+        // FIX 1: Configurar el spinner de estado correctamente
         val spinnerEstado = findViewById<AutoCompleteTextView>(R.id.spinnerEstado)
-        val estados = arrayOf("1", "0")
-        spinnerEstado.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, estados))
+        val estados = arrayOf("Activo", "Inactivo")
+        val adapterEstado = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, estados)
+        spinnerEstado.setAdapter(adapterEstado)
+        spinnerEstado.threshold = 1 // Muestra las opciones desde el primer carácter
+
+
+        spinnerEstado.setOnClickListener {
+            spinnerEstado.showDropDown()
+        }
 
         val cardFormulario = findViewById<CardView>(R.id.cardFormulario)
         val btnToggleForm = findViewById<MaterialButton>(R.id.btnToggleForm)
@@ -98,25 +106,42 @@ class ProductosActivity : AppCompatActivity() {
     private fun guardarProducto() {
         val nombre = findViewById<EditText>(R.id.etNombre).text.toString().trim()
         val precio = findViewById<EditText>(R.id.etPrecio).text.toString().toDoubleOrNull()
-        val stock = findViewById<EditText>(R.id.etStock).text.toString().toIntOrNull()
+        // FIX 2: Eliminamos stock, solo usamos stockActual
         val stockMinimo = findViewById<EditText>(R.id.etStockMinimo).text.toString().toIntOrNull()
         val stockMaximo = findViewById<EditText>(R.id.etStockMaximo).text.toString().toIntOrNull()
         val stockActual = findViewById<EditText>(R.id.etStockActual).text.toString().toIntOrNull()
         val idCategoria = findViewById<EditText>(R.id.etIdCategoria).text.toString().toIntOrNull()
         val idProveedor = findViewById<EditText>(R.id.etIdProveedor).text.toString().toIntOrNull()
-        val estado = findViewById<AutoCompleteTextView>(R.id.spinnerEstado).text.toString().trim()
+        val estadoTexto = findViewById<AutoCompleteTextView>(R.id.spinnerEstado).text.toString().trim()
 
-        if (nombre.isEmpty() || precio == null || stock == null || stockMinimo == null ||
+        // FIX 3: Convertir "Activo"/"Inactivo" a "1"/"0"
+        val estado = when(estadoTexto) {
+            "Activo" -> "1"
+            "Inactivo" -> "0"
+            else -> ""
+        }
+
+        // FIX 4: Validación actualizada sin stock
+        if (nombre.isEmpty() || precio == null || stockMinimo == null ||
             stockMaximo == null || stockActual == null || idCategoria == null ||
             idProveedor == null || estado.isEmpty()) {
-            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
             return
         }
 
         if (productoEditando != null) {
+            // FIX 5: Actualizar producto sin el campo stock
             val productoActualizado = Producto(
-                productoEditando!!.idProducto, nombre, precio, stock,
-                stockMinimo, stockMaximo, stockActual, idCategoria, idProveedor, estado
+                productoEditando!!.idProducto,
+                nombre,
+                precio,
+                stockActual, // Ahora el tercer parámetro es stockActual (antes era stock)
+                stockMinimo,
+                stockMaximo,
+                stockActual,
+                idCategoria,
+                idProveedor,
+                estado
             )
 
             RetrofitInstance.getApi(this).actualizarProducto(productoEditando!!.idProducto, productoActualizado)
@@ -141,7 +166,19 @@ class ProductosActivity : AppCompatActivity() {
                     }
                 })
         } else {
-            val nuevo = Producto(0, nombre, precio, stock, stockMinimo, stockMaximo, stockActual, idCategoria, idProveedor, estado)
+            // FIX 6: Crear producto sin el campo stock
+            val nuevo = Producto(
+                0,
+                nombre,
+                precio,
+                stockActual, // Aquí también
+                stockMinimo,
+                stockMaximo,
+                stockActual,
+                idCategoria,
+                idProveedor,
+                estado
+            )
 
             RetrofitInstance.getApi(this).crearProducto(nuevo).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
@@ -196,13 +233,21 @@ class ProductosActivity : AppCompatActivity() {
         productoEditando = producto
         findViewById<EditText>(R.id.etNombre).setText(producto.nombre)
         findViewById<EditText>(R.id.etPrecio).setText(producto.precio.toString())
-        findViewById<EditText>(R.id.etStock).setText(producto.stock.toString())
+        // FIX 7: Ya no cargamos stock, solo stockActual
         findViewById<EditText>(R.id.etStockMinimo).setText(producto.stockMinimo.toString())
         findViewById<EditText>(R.id.etStockMaximo).setText(producto.stockMaximo.toString())
         findViewById<EditText>(R.id.etStockActual).setText(producto.stockActual.toString())
         findViewById<EditText>(R.id.etIdCategoria).setText(producto.idCategoria.toString())
         findViewById<EditText>(R.id.etIdProveedor).setText(producto.idProveedor.toString())
-        findViewById<AutoCompleteTextView>(R.id.spinnerEstado).setText(producto.estado, false)
+
+        // FIX 8: Convertir "1"/"0" de vuelta a "Activo"/"Inactivo" para mostrar
+        val estadoTexto = when(producto.estado) {
+            "1" -> "Activo"
+            "0" -> "Inactivo"
+            else -> producto.estado
+        }
+        findViewById<AutoCompleteTextView>(R.id.spinnerEstado).setText(estadoTexto, false)
+
         findViewById<CardView>(R.id.cardFormulario).visibility = View.VISIBLE
         findViewById<MaterialButton>(R.id.btnToggleForm).text = "- Cancelar Edición"
         findViewById<MaterialButton>(R.id.btnGuardar).text = "Actualizar Producto"
@@ -211,7 +256,7 @@ class ProductosActivity : AppCompatActivity() {
     private fun limpiarFormulario() {
         findViewById<EditText>(R.id.etNombre).setText("")
         findViewById<EditText>(R.id.etPrecio).setText("")
-        findViewById<EditText>(R.id.etStock).setText("")
+        // FIX 9: Ya no limpiamos etStock porque no existe
         findViewById<EditText>(R.id.etStockMinimo).setText("")
         findViewById<EditText>(R.id.etStockMaximo).setText("")
         findViewById<EditText>(R.id.etStockActual).setText("")

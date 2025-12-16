@@ -95,6 +95,14 @@
 				  android:exported="false"/>
 
 
+		<activity
+				android:name=".EconsultarProductosActivity"
+				android:exported="false" />
+
+		<activity
+				android:name=".EregistrarSalidaActivity"
+				android:exported="false" />
+
 	</application>
 
 </manifest>
